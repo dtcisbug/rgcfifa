@@ -42,4 +42,5 @@ message(STATUS "CXX_FLAGS = " ${CMAKE_CXX_FLAGS} " " ${CMAKE_CXX_FLAGS_${BUILD_T
 
 add_subdirectory(Common)
 add_subdirectory(Network)
+add_subdirectory(Server)
 
