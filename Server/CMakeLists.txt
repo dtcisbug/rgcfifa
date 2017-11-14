@@ -5,6 +5,8 @@ set(net_SRCS
     ./WorldServer.cpp
     ./Log.cpp
 
+    ../MsgHandler/MsgHandler.cpp
+
   )
 
 ADD_EXECUTABLE(rgc_server ${net_SRCS})
