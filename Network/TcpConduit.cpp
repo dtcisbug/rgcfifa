@@ -77,21 +77,7 @@ namespace Network
 			else
 			{
 				evbuffer_remove(buffer, data, len);
-				if(cmd & 0x1000000)
-				{
-					unsigned int decomp_size = static_cast<unsigned long>(*(UInt16*)(data + off));
-                    buf::Unzipper unzip(data + off + 2, len - off - 2);
-                    if (unzip.size() && decomp_size == unzip.size())
-                    {
-                        onRecv(cmd & 0xFFFFFF, decomp_size, (char*)&unzip);
-                    }
-                    else
-                    {
-                        forceClose();
-                    }
-				}
-				else
-					onRecv(cmd, len - off, data + off);
+			    onRecv(cmd, len - off, data + off);
 				delete[] data;
 			}
 		}

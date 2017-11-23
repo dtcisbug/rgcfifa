@@ -2,7 +2,7 @@
 
 //#include "./Server/WorldServer.h"
 //#include "./MsgHandler/MsgTypes.h"
-//#include "./Server/GlobalObject.h"
+#include "./Server/GlobalObject.h"
 //#include "./Server/Cfg.h"
 //#include "./MsgID.h"
 #include <event2/buffer.h>
@@ -39,50 +39,38 @@ void GameClient::setChk(UInt8 chk)
 int GameClient::parsePacket( struct evbuffer * buf, int &off, int &len )
 {
 	size_t l = evbuffer_get_length(buf);
-	if(l < 5)
+	if(l < 4)
 	{
 		off = 0;
 		len = 0;
 		return 0;
 	}
-	UInt8 * buf_ = static_cast<UInt8 *>(evbuffer_pullup(buf, 5));
-	if(buf_[2] == 'o' && buf_[0] == '<' && buf_[1] == 'p' && buf_[3] == 'l')
-	{
-		off = 0;
-		len = l;
-		return 0xFFFF;
-	}
+	UInt8 * buf_ = static_cast<UInt8 *>(evbuffer_pullup(buf, 4));
 
 	UInt32 len2 = *reinterpret_cast<UInt16 *>(buf_);
-	if(len2 + 5 > l)
+	if(len2 + 4 > l)
 	{
 		off = 0;
 		len = 0;
 		return 0;
 	}
 
-	off = 5;
-	len = len2 + 5;
-    _chk = buf_[2];
+	off = 4;
+	len = len2 + 4;
+    //_chk = buf_[2];
 
-	switch(buf_[3])
+	switch(buf_[2])
 	{
-	case 0xFF:
-		return buf_[4];
-/*	case 0xFE:
-		if(cfg.supportCompress)
-			return buf_[4] | 0x1000000;
-		return 0;*/
 	default:
-		return ((static_cast<UInt16>(buf_[3]))<<8)+static_cast<UInt16>(buf_[4]);
+		return ((static_cast<UInt16>(buf_[2]))<<8)+static_cast<UInt16>(buf_[3]);
 	}
 	return 0;
 }
 
 void GameClient::onRecv( int cmd, int len, void * buf )
 {
-    //GameMsgHdr hdr( cmd,1, len );
-    //GLOBAL().PushMsg( hdr,  buf );
+    ClientMsgHdr hdr( cmd,0, len ,id());
+    GLOBAL().PushMsg( hdr,  buf );
 }
 
 void GameClient::onDisconnected()

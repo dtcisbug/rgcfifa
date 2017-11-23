@@ -23,7 +23,7 @@ namespace Network
 			switch(ss)
 			{
 			case -1:
-				if(!ClientConn::enabled())
+				if(/*!ClientConn::enabled()*/1)
 					return NULL;
                 sock = socket( AF_INET, SOCK_STREAM, 0 );
                 printf("FD %s: %u\n", __PRETTY_FUNCTION__, sock);

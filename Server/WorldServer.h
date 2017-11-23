@@ -8,6 +8,10 @@
 
 extern const char* s_HelpInfo;
 
+namespace GObject{
+    class Logic;
+}
+
 class BaseThread;
 class WorldServer : public Singleton<WorldServer>
 {
@@ -29,12 +33,13 @@ public:
 
 public:
 	inline Network::TcpServerWrapper* GetTcpService() {return m_TcpService;}
+    GObject::Logic& GetLogic();
 
 protected:
 	template <typename WorkerType>
-	inline WorkerType& Worker(UInt8 worker)
+	inline WorkerType& Worker()
 	{
-		return (dynamic_cast<WorkerThread<WorkerType>*>(m_AllWorker[worker]))->Worker();
+		return (dynamic_cast<WorkerThread<WorkerType>*>(m_LogicWorker))->Worker();
 	}
 
 private:
@@ -43,21 +48,14 @@ private:
 
 	//////////////////////////////////////////////////////////////////////////
 public:
-	BaseThread*	m_AllWorker[MAX_THREAD_NUM];
+	BaseThread*	m_LogicWorker;
 	Network::TcpServerWrapper* m_TcpService;
-
-public:
-    void Up();
-    void Down();
-    void State(const char* action, int serverNum);
-
-    void updateState(const char* action);
 
 };
 
 #define SERVER()		WorldServer::Instance()
 #define NETWORK()		SERVER().GetTcpService()
-#define WORLD()			SERVER().GetWorld()
+#define LOGIC()			SERVER().GetLogic()
 
 #define CURRENT_THREAD_ID() WorkerThread<WorkerRunner<> >::LocalWorker().GetThreadID()
 inline  bool  IsMainThread()

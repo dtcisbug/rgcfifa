@@ -1,13 +1,6 @@
 #include "Common/Config.h"
 #include "MsgHandler.h"
 #include "Server/WorldServer.h"
-#ifndef _FB
-#ifndef _VT
-#ifndef _WIN32
-//#include "GObject/DCLogger.h"
-#endif
-#endif
-#endif
 #include "MsgID.h"
 
 void MsgHandler::DeregisterAllMsg()

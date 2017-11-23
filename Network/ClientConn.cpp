@@ -31,7 +31,6 @@ void ClientConn::initConnection()
 	addr.sin_addr.s_addr = htonl(ResolveAddress("127.0.0.1"));
 	addr.sin_port = htons(8888);
     int n = bufferevent_socket_connect(_bev, (struct sockaddr *)&addr, sizeof(addr));
-	//if(bufferevent_socket_connect(_bev, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 	if(n < 0)
 		throw std::bad_exception();
 	Stream st(0x111, 0xEF);

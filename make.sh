@@ -8,6 +8,7 @@ BUILD_TYPE=${BUILD_TYPE:-debug}
 INSTALL_DIR=${INSTALL_DIR:-../${BUILD_TYPE}-install}
 
 mkdir -p $BUILD_DIR/$BUILD_TYPE \
+  && cd script && make && cd .. \
   && cd $BUILD_DIR/$BUILD_TYPE \
   && cmake \
            -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
@@ -16,4 +17,4 @@ mkdir -p $BUILD_DIR/$BUILD_TYPE \
   && make $*
 
 # cd $SOURCE_DIR && doxygen
-
+#  && cd script && make && cp libscript.a ../$BUILD_DIR/$BUILD_TYPE/libscript.a && cd .. \

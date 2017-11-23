@@ -3,11 +3,12 @@
 
 #include "Common/Config.h"
 #include "MsgHandler/MsgHandler.h"
+#include "MsgHandler/MsgPopHandler.h"
 
 #include <event2/event.h>
 #include "Log.h"
 
-template<class H = MsgHandler>
+template<class H = MsgPopHandler>
 class WorkerRunner
 {
 protected:
@@ -267,7 +268,7 @@ protected:
 	bool m_IsActive;
 	bool m_IsPause;
 	bool m_CheckPause;
-	MsgHandler*	m_MsgHandler;
+	MsgPopHandler*	m_MsgHandler;
 
 	UInt32 m_Timerinterval;
 

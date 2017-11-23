@@ -63,7 +63,7 @@ private:
 template <typename MsgHdrType>
 inline void GlobalObject::PushMsg(const MsgHdrType& hdr, void* msgBody)
 {
-	UInt8 workerId = hdr.msgHdr.desWorkerID;
+	UInt8 workerId = WORKER_THREAD_LOGIC;
 	if( workerId >= (UInt8)MAX_THREAD_NUM )
 		return;
     char* buffer = (char*)AllocMsgBlock(sizeof(MsgHdrType) + hdr.msgHdr.bodyLen);

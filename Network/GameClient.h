@@ -4,9 +4,6 @@
 #include "Common/AtomicVal.h"
 #include "TcpConduit.h"
 
-#define IDTYPE UInt64//LIBO
-
-
 namespace Network
 {
 

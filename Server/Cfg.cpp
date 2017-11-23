@@ -2,6 +2,8 @@
 #include "Cfg.h"
 #include "Network/Network.h"
 #include "Common/StringTokenizer.h"
+#include "script/Script.h"
+#include "ConfigScript.h"
 
 #ifndef _WIN32
 #include <sys/ioctl.h> // for ioctl
@@ -20,7 +22,6 @@ Cfg::Cfg( ): tcpPort(8889), serverIp(0), serverLogId(0), dbDataPort(3306), dbObj
 
 void Cfg::load(const char * scriptStr)
 {
-	/*
     Script::ConfigScript script(this);
 	if(scriptStr != NULL)
 	{
@@ -28,7 +29,6 @@ void Cfg::load(const char * scriptStr)
 		return;
 	}
 	script.doFile(_filename.c_str());
-    */
 }
 
 void Cfg::setIfName(const char* iname)
