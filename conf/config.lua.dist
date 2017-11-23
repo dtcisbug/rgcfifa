@@ -1,0 +1,16 @@
+cfg:setTcpPort([port]);
+cfg:setServerLogId([id]);
+cfg:setScriptPath("[scriptpath]");
+cfg:setReportPath("reports/");
+cfg:setDataDatabase("kingxin.com", 3306, "kx", "8trsz2YeCHpUGfTJ", "kx_info_v[dataver]");
+cfg:setObjectDatabase("[gshost].kingxin.com", 3306, "kx", "8trsz2YeCHpUGfTJ", "kx_[hoster]_s[servernum]");
+cfg:setLogDatabase("[lshost].kingxin.com", 3306, "kx", "8trsz2YeCHpUGfTJ", "kx_houtai");
+cfg:setLockDatabase("localhost", 3306, "kingxin", "kingxin", "lock_global");
+cfg:setCryptKeys("[key1]", "[key2]");
+cfg:setAdminAllowedIP("10.0.8.0/24");
+cfg:setWallow(true);
+cfg:setOpening([year], [month], [day]);
+cfg:setGMCheck(false);
+cfg:setLoginLimit(false);
+cfg:setLoginMax(3000);
+cfg:setSecDCLog(false);
