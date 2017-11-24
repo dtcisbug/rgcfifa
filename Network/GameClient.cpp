@@ -1,13 +1,11 @@
-﻿#include "./GameClient.h"
+﻿#ifdef _WIN32
+#define _WSPIAPI_H_
+#define _WINSOCKAPI_
+#endif
 
-//#include "./Server/WorldServer.h"
-//#include "./MsgHandler/MsgTypes.h"
+#include "./GameClient.h"
 #include "./Server/GlobalObject.h"
-//#include "./Server/Cfg.h"
-//#include "./MsgID.h"
 #include <event2/buffer.h>
-//#include "./MsgHandler/JsonParser.h"
-//#include "MsgHandler/GMHandler.h"
 
 namespace Network
 {
@@ -80,6 +78,7 @@ void GameClient::onDisconnected()
 
 bool GameClient::active()
 {
+	return true;
 }
 
 void GameClient::OnTick(UInt32 now)

@@ -5,10 +5,12 @@
 #ifndef _WIN32
 #include <sys/time.h>
 #else
-#include <Winbase.h>
+#include <Windows.h>
 #include <time.h>
 #define localtime_r(t, tm) localtime_s(tm, t)
 #endif
+
+#define bj_timezone 8 // beijing east 8 zone
 
 class TimeUtil
 {
@@ -148,7 +150,7 @@ public:
     }
 	static inline UInt32 SharpDay(int c = 0, UInt32 cur = Now())
 	{
-		UInt32 tmptm = (cur + timezone) / 86400 * 86400 + timezone;
+		UInt32 tmptm = (cur + bj_timezone) / 86400 * 86400 + bj_timezone;
         if(tmptm > cur)
 			tmptm -= 86400;
 		else if(tmptm + 86400 <= cur)

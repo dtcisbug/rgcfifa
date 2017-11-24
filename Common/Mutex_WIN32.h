@@ -4,6 +4,7 @@
 
 #include "Platform.h"
 #include "Exception.h"
+#include <windows.h>
 
 
 class MutexImpl

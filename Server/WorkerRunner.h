@@ -5,6 +5,11 @@
 #include "MsgHandler/MsgHandler.h"
 #include "MsgHandler/MsgPopHandler.h"
 
+#ifdef _WIN32
+#define _WSPIAPI_H_
+#define _WINSOCKAPI_
+#endif
+
 #include <event2/event.h>
 #include "Log.h"
 

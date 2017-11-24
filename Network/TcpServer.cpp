@@ -4,16 +4,12 @@
 #include "Common/Thread.h"
 #include "Common/TimeUtil.h"
 
+#ifdef _WIN32
+#define _WSPIAPI_H_
+#define _WINSOCKAPI_
+#endif
 #include <event2/event.h>
 #include <event2/util.h>
-
-#ifdef _MSC_VER
-#ifdef _DEBUG
-#pragma comment(lib, "eventd.lib")
-#else
-#pragma comment(lib, "event.lib")
-#endif
-#endif
 
 namespace Network
 {

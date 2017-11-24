@@ -1,12 +1,12 @@
+#ifdef _WIN32
+#define _WSPIAPI_H_
+#define _WINSOCKAPI_
+#endif
+
 #include "Common/Config.h"
 #include "ClientConn.h"
-
 #include "TcpServer.h"
-
-//#include "Server/WorldServer.h"
-//#include "Server/Cfg.h"
 #include "Common/Stream.h"
-//#include "MsgID.h"
 #include <event2/buffer.h>
 #include <event2/bufferevent.h>
 

@@ -13,6 +13,7 @@ namespace GObject
     MonoDomain* domain;
     MonoAssembly* assembly;
     MonoImage* image;
+	MonoClass * main_class;
 
     bool Logic::Init()
     {
@@ -24,8 +25,8 @@ namespace GObject
         mono_add_internal_call("CommonNetWork.CCommonNetwork::Testmethod", reinterpret_cast<void*>(TestFunc));
         mono_add_internal_call("CommonNetWork.CCommonNetwork::SendMsg", reinterpret_cast<void*>(SendMsg));
 
-        AddTimer(86400 * 1000, Logic_Test,this,10*1000);
-        AddTimer(30, Tick,this,10*1000);
+        //AddTimer(86400 * 1000, Logic_Test,this,10*1000);
+        //AddTimer(30, Tick,this,10*1000);
         return true; 
     }
 
@@ -55,7 +56,7 @@ namespace GObject
     {
         // =====================================================准备调用
         //获取MonoClass,类似于反射
-        MonoClass* main_class = mono_class_from_name(image,"CommonNetWork", "CCommonNetwork");
+		main_class = mono_class_from_name(image, "CommonNetWork", "CCommonNetwork");
 
         //获取要调用的MonoMethodDesc,主要调用过程
         MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:PrintMono()", true);
@@ -71,14 +72,17 @@ namespace GObject
     {
         // =====================================================准备调用
         //获取MonoClass,类似于反射
-        MonoClass* main_class = mono_class_from_name(image,"CommonNetWork", "CCommonNetwork");
+		main_class = mono_class_from_name(image, "CommonNetWork", "CCommonNetwork");
 
         //获取要调用的MonoMethodDesc,主要调用过程
-        MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:Tick()", true);
+        MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:Tick(int)", false);
         MonoMethod* entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
         mono_method_desc_free(entry_point_method_desc);
+		void* args[1];
+		UInt64 now_tick = TimeUtil::GetTick();
+		args[0] = &now_tick;
         //调用方法
-        mono_runtime_invoke(entry_point_method, NULL, NULL, NULL);
+        mono_runtime_invoke(entry_point_method, NULL, args, NULL);
         
         return;
     }
