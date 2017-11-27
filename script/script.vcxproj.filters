@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\ProjectTen\New_Server\Server\script\Script.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\ProjectTen\New_Server\Server\script\lua_tinker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\ProjectTen\New_Server\Server\script\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\loadlib.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lstring.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lmathlib.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\luac.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lstrlib.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lparser.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lfunc.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lauxlib.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lcode.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lzio.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\ldump.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lobject.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\linit.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\liolib.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lapi.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\ldebug.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\ldo.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lmem.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lstate.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lgc.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\ltable.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lua.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\print.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\ltablib.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lopcodes.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\ldblib.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\loslib.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\ltm.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\llex.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lbaselib.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lundump.c">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="E:\ProjectTen\New_Server\Server\script\lua\lvm.c">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{ED5101FC-72F6-3F33-B3E4-85C97EA147DE}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
