@@ -85,17 +85,17 @@ void TcpSlaveServer::postInitServer()
 
 void TcpSlaveServer::initConnection(int stype)
 {
-	if(stype - 1 >= TCP_CONN_IDX_MAX || _connUp[stype - 1] >= 0)
-		return;
-	_connUp[stype - 1] = 0;
+    if(_connUp.find(stype) != _connUp.end() && _connUp[stype] > 0)
+        return;    
+
+	_connUp[stype] = 0;
 	FastMutex::ScopedLock lk(_opMutex);
 	_opList.push_back(_OpStruct(1, -stype));
 }
 
 void TcpSlaveServer::lostConnection( int stype )
 {
-	if(stype - 1 < TCP_CONN_IDX_MAX)
-		_connUp[stype - 1] = -1;
+    _connUp[stype] = -1;
 }
 
 void TcpSlaveServer::accepted( int ss )
@@ -122,10 +122,11 @@ void TcpSlaveServer::_accepted( int ss )
 		{
 			try
 			{
+                int uid = id * WORKERS + _slave_idx;
 				if(ss < 0)
 				{
 					try {
-                        conduit = newConnection(ss, this, id * WORKERS + _slave_idx);
+                        conduit = newConnection(ss, this, uid);
 
                         if(conduit)
                             conduit->initConnection();
@@ -137,13 +138,12 @@ void TcpSlaveServer::_accepted( int ss )
 					}
 				}
 				else
-					conduit = newConduit(ss, this, id * WORKERS + _slave_idx);
+					conduit = newConduit(ss, this, uid);
 				if(conduit == NULL)
 				{
 					if(ss < 0)
 					{
-						if(-1 - ss < TCP_CONN_IDX_MAX)
-							_connUp[-1 - ss] = -1;
+                        _connUp[-ss] = -1;
 					}
 					_mutex.unlock();
 					return;
@@ -153,16 +153,15 @@ void TcpSlaveServer::_accepted( int ss )
 			{
 				if(ss < 0)
 				{
-					if(-1 - ss < TCP_CONN_IDX_MAX)
-						_connUp[-1 - ss] = -1;
+                    _connUp[-ss] = -1;
 				}
 				_mutex.unlock();
 				return;
 			}
 			_emptySet.erase(it);
 			_conduits[id].reset(conduit);
-			if(ss < 0 && -1 - ss < TCP_CONN_IDX_MAX)
-				_connUp[-1 - ss] = id * WORKERS + _slave_idx;
+            if (ss < 0)
+                _connUp[-ss] = id * WORKERS + _slave_idx;
 			_mutex.unlock();
 			++ _count;
 			return;
@@ -171,10 +170,11 @@ void TcpSlaveServer::_accepted( int ss )
 	size_t id = _conduits.size();
 	try
 	{
+        int uid = id * WORKERS + _slave_idx;
 		if(ss < 0)
 		{
 			try {
-                conduit = newConnection(ss, this, id * WORKERS + _slave_idx);
+                conduit = newConnection(ss, this, uid);
                 if(conduit)
                     conduit->initConnection();
 			} catch(...)
@@ -185,13 +185,12 @@ void TcpSlaveServer::_accepted( int ss )
 			}
 		}
 		else
-			conduit = newConduit(ss, this, id * WORKERS + _slave_idx);
+			conduit = newConduit(ss, this, uid);
 		if(conduit == NULL)
 		{
 			if(ss < 0)
 			{
-				if(-1 - ss < TCP_CONN_IDX_MAX)
-					_connUp[-1 - ss] = -1;
+                _connUp[-ss] = -1;
 			}
 			_mutex.unlock();
 			return;
@@ -201,16 +200,15 @@ void TcpSlaveServer::_accepted( int ss )
 	{
 		if(ss < 0)
 		{
-			if(-1 - ss < TCP_CONN_IDX_MAX)
-				_connUp[-1 - ss] = -1;
+            _connUp[-ss] = -1;
 		}
 		_mutex.unlock();
 		return;
 	}
 	_conduits.push_back(std::shared_ptr<TcpConduit>(conduit));
 	++ _count;
-	if(ss < 0 && -1 - ss < TCP_CONN_IDX_MAX)
-		_connUp[-1 - ss] = id * WORKERS + _slave_idx;
+    if (ss < 0)
+		_connUp[-ss] = id * WORKERS + _slave_idx;
 	_mutex.unlock();
 }
 
@@ -317,10 +315,10 @@ void TcpSlaveServer::onTick(UInt32 now)
     }
 }
 
-TcpMasterServer::TcpMasterServer(UInt16 port):
-	TcpServer(), _socket(0), _ev_server(NULL)
+TcpMasterServer::TcpMasterServer(ServerCommonConfig server_cfg):
+	TcpServer(), _socket(0), _ev_server(NULL),_server_cfg(server_cfg)
 {
-	listen(INADDR_ANY, port, 8);
+	listen(INADDR_ANY, server_cfg.m_ServerListenPort, 8);
 	evutil_make_socket_nonblocking(_socket);
 	make_linger(_socket);
 }
@@ -352,6 +350,7 @@ void TcpMasterServer::postInitServer()
 	for(UInt32 i = 0; i < WORKERS; ++ i)
 	{
 		TcpSlaveServer * s = newWorker(i);
+        s->setServerConfig(_server_cfg);
 		_workers.push_back(std::shared_ptr<TcpSlaveServer>(s));
 	}
 	for(int i = 0; i < WORKERS; ++ i)
@@ -420,11 +419,9 @@ const std::shared_ptr<TcpConduit> TcpMasterServer::find( int id )
 
 const std::shared_ptr<TcpConduit> TcpMasterServer::findConn( int id )
 {
-	int rid = -1 - id;
-	if(rid < 0)
-		return find(id);
-	if(rid >= TCP_CONN_IDX_MAX)
-		return _empty;
+    if (id > 0)
+        return find(id);
+    int rid = -id;
 	return find(_workers[0]->_connUp[rid]);
 }
 
@@ -527,7 +524,10 @@ void TcpMasterServer::onTimerCheck()
 {
 	if(_running)
     {
-		_workers[0]->initConnection(1);
+        for (auto& iter : _server_cfg.m_ServerConnectMap)
+        {
+            _workers[0]->initConnection(iter.first);
+        }
     }
 	else
 		event_base_loopbreak(_ev_base);

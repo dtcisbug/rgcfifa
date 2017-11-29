@@ -20,18 +20,15 @@ namespace Network
 		virtual TcpConduit * newConnection(int ss, TcpSlaveServer * s, int id)
 		{
             int sock = -1;
-			switch(ss)
+            if (ss < 0)
 			{
-			case -1:
-				if(/*!ClientConn::enabled()*/1)
+				if(!ClientConn::enabled())
 					return NULL;
                 sock = socket( AF_INET, SOCK_STREAM, 0 );
                 printf("FD %s: %u\n", __PRETTY_FUNCTION__, sock);
                 if(sock < 0)
                     return NULL;
-				return new(std::nothrow) ClientConn(sock, s, id);
-			default:
-				return NULL;
+				return new(std::nothrow) ClientConn(sock, s, id, -ss,_server_cfg.GetIpFromConnectMap(-ss),_server_cfg.GetPortFromConnectMap(-ss));
 			}
 			return NULL;
 		}
@@ -40,9 +37,9 @@ namespace Network
 	class TcpServerWrapper
 	{
 	public:
-		TcpServerWrapper(UInt16 port)
+		TcpServerWrapper(ServerCommonConfig server_cfg)
 		{
-			m_TcpService = new TcpMasterServerT<GameClient, TcpSlaveWrapper>(port);
+			m_TcpService = new TcpMasterServerT<GameClient, TcpSlaveWrapper>(server_cfg);
 			assert(m_TcpService != NULL);
 			m_Active = true;
 		}

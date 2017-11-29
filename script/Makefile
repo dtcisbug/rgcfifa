@@ -26,6 +26,7 @@ endif
 
 INCLS += -I..
 LIBS := $(LIBS)
+CPPFLAGS += -std=c++11
 
 .PHONY: all install clean distclean luajit lua
 

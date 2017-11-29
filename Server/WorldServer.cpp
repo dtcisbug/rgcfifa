@@ -93,7 +93,14 @@ void WorldServer::Run()
 {
     m_LogicWorker->Run();
 
-	m_TcpService = new Network::TcpServerWrapper(cfg.tcpPort);
+    ServerCommonConfig server_cfg(cfg.serverType,cfg.serverUID,cfg.tcpPort);
+    for (auto& iter: cfg.serverConnectList)
+    {
+        server_cfg.AddConnectList(std::get<0>(iter),std::get<1>(iter),std::get<2>(iter),std::get<3>(iter));
+    }
+
+	//m_TcpService = new Network::TcpServerWrapper(cfg.tcpPort);
+	m_TcpService = new Network::TcpServerWrapper(server_cfg);
 	m_TcpService->Start();
 
     //m_LogicWorker->tryJoin(300000);

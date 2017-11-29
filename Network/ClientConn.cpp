@@ -13,8 +13,8 @@
 namespace Network
 {
 
-ClientConn::ClientConn( int fd, Network::TcpSlaveServer * s, int id ) :
-	TcpConduit(fd, s, id)
+ClientConn::ClientConn( int fd, Network::TcpSlaveServer * s, int id, int ss,std::string ip, UInt16 port) : 
+	TcpConduit(fd, s, id) , _ss(ss), _ip(ip), _port(port)
 {
 }
 
@@ -28,8 +28,8 @@ void ClientConn::initConnection()
 {
 	struct sockaddr_in addr = {0};
 	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = htonl(ResolveAddress("127.0.0.1"));
-	addr.sin_port = htons(8888);
+	addr.sin_addr.s_addr = htonl(ResolveAddress(_ip.c_str()));
+	addr.sin_port = htons(_port);
     int n = bufferevent_socket_connect(_bev, (struct sockaddr *)&addr, sizeof(addr));
 	if(n < 0)
 		throw std::bad_exception();
@@ -80,7 +80,7 @@ void ClientConn::onDisconnected()
 	//ArenaMsgHdr hdr( 0x101, 1, id(), 1 );
 	//UInt8 r = 1;
 	//GLOBAL().PushMsg( hdr, &r );
-	_host->lostConnection(1);
+	_host->lostConnection(_ss);
 }
 
 }

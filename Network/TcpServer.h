@@ -7,6 +7,7 @@
 #include "Common/Mutex.h"
 #include "Common/Thread.h"
 #include "Common/Runnable.h"
+#include "Common/ServerCommon.h"
 
 struct event_base;
 struct event;
@@ -14,7 +15,7 @@ struct event;
 namespace Network
 {
 	#define WORKERS 2
-	#define TCP_CONN_IDX_MAX 2    //LIBO
+	#define TCP_CONN_IDX_MAX 2  
 
 	class TcpServer:
 		public Runnable
@@ -43,12 +44,8 @@ namespace Network
 	{
 		friend class TcpMasterServer;
 	public:
-		TcpSlaveServer(UInt32 idx): TcpServer(), _slave_idx(idx), _count(0), _evOp(NULL), _evTick(NULL) 
+		TcpSlaveServer(UInt32 idx): TcpServer(), _slave_idx(idx), _count(0), _evOp(NULL), _evTick(NULL), _server_cfg(0,0,0) 
         { 
-            for(int i = 0; i < TCP_CONN_IDX_MAX; ++ i) 
-            {
-                _connUp[i] = -1; 
-            }
         }
 		void initConnection(int = 1);
 		void lostConnection(int = 1);
@@ -78,6 +75,7 @@ namespace Network
 		void broadcast(const void *, int);
 		template <typename ConduitType, typename PredType, typename DataType>
 		void enumerate(PredType pred, DataType);
+        void setServerConfig(const ServerCommonConfig& cfg) { _server_cfg = cfg;}
 
 	protected:
 		UInt32 _slave_idx;
@@ -86,7 +84,8 @@ namespace Network
 		_ConduitList _conduits;
 		std::set<size_t> _emptySet;
 
-		int _connUp[TCP_CONN_IDX_MAX];
+        std::map<int/*id*/,int/*flag*/> _connUp;
+        ServerCommonConfig _server_cfg;
 
 	private:
 		Mutex _mutex;
@@ -108,7 +107,7 @@ namespace Network
 		public TcpServer
 	{
 	public:
-		TcpMasterServer(UInt16 port);
+		TcpMasterServer(ServerCommonConfig server_cfg);
 		void listen(UInt32 addr, UInt16 port, UInt32 backlog);
 		const std::shared_ptr<TcpConduit> find(int id);
 		const std::shared_ptr<TcpConduit> findConn(int id);
@@ -139,6 +138,7 @@ namespace Network
 		std::shared_ptr<TcpConduit> _empty;
 		Thread _workerThreads[WORKERS];
 		std::vector<std::shared_ptr<TcpSlaveServer> > _workers;
+        ServerCommonConfig _server_cfg;
 	};
 
     class TcpClientServer:
@@ -185,7 +185,7 @@ namespace Network
 		public TcpMasterServer
 	{
 	public:
-		TcpMasterServerT(UInt16 port): TcpMasterServer(port) {}
+		TcpMasterServerT(ServerCommonConfig server_cfg): TcpMasterServer(server_cfg) {}
 	protected:
 		TcpSlaveServer * newWorker(int idx) { return new SL(idx); }
 	};

@@ -10,7 +10,7 @@ class ClientConn:
 	public TcpConduit
 {
 public:
-	ClientConn(int fd, Network::TcpSlaveServer * s, int id);
+	ClientConn(int fd, Network::TcpSlaveServer * s, int id, int ss, std::string ip, UInt16 port);
 	static bool enabled();
     virtual void initConnection();
 
@@ -22,6 +22,10 @@ protected:
 
 public:
 	virtual bool active() { return false; }
+private:
+    int _ss;
+    std::string _ip;
+    UInt16 _port;
 };
 
 }

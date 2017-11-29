@@ -10,13 +10,9 @@
 #include <net/if.h> // for struct ifreq, IF_NAMESIZE
 #endif
 
-Cfg::Cfg( ): tcpPort(8889), serverIp(0), serverLogId(0), dbDataPort(3306), dbObjectPort(3306),
-    fbVersion(false), vtVersion(false), debug(false),
-    openYear(2011), openMonth(9), openDay(23), enableWallow(false), limitLuckyDraw(0),
-	merged(false), supportCompress(true), GMCheck(true), channelNum(0), serverNum(0), serverNo(0), testPlatform(false),
-    arenaPort(0), serverWarPort(0),
-	enableLoginLimit(false), loginLimit(10000), onlineLimit(0), udplog(true), dclog(true), secdclog(false),secdclogTest(false),unionPlatform(false),autoForbid(false),autoKick(false),rpServer(e_rp_none),
-    _filename("conf/config.lua")
+Cfg::Cfg( ): tcpPort(8889),serverIp(0), serverLogId(0), dbPort(3306), 
+    debug(false),arenaPort(0),_filename("conf/config_game.lua"),
+    channelNum(0), serverNum(0)
 {
 }
 
@@ -25,10 +21,16 @@ void Cfg::load(const char * scriptStr)
     Script::ConfigScript script(this);
 	if(scriptStr != NULL)
 	{
-		script.runScript(scriptStr);
+		//script.runScript(scriptStr);
+	    script.doFile(scriptStr);
 		return;
 	}
 	script.doFile(_filename.c_str());
+}
+
+void Cfg::addConnectList(UInt8 type,UInt8 uid,const char* str,UInt16 p)
+{
+    serverConnectList.push_back(std::make_tuple(type,uid,str,p)); 
 }
 
 void Cfg::setIfName(const char* iname)
