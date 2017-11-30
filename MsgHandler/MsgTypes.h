@@ -8,6 +8,7 @@ enum MSGTYPE
 {
     CLIENT_MSGTYPE = 0,
     SERVER_MSGTYPE = 1,
+    PROXY_MSGTYPE = 2,
 
     MAX_MSGTYPE
 };
@@ -30,14 +31,18 @@ struct ClientMsgHdr
 	MsgHdr	msgHdr;
 };
 
-struct ArenaMsgHdr
+struct ProxyMsgHdr
 {
-    ArenaMsgHdr():
-        sessionID(0) { }
-    ArenaMsgHdr(UInt32 id, UInt8 type, int sess, UInt32 blen):
-        msgHdr(id, type, blen,sess), sessionID(sess) { }
+    ProxyMsgHdr() { }
+    ProxyMsgHdr(UInt32 id, UInt8 type, int sess, UInt32 blen,int target,int source):
+        msgHdr(id, type, blen,sess),
+        target_type(target >> 8),target_id(static_cast<UInt8>(target)),
+        source_type(source >> 8),source_id(static_cast<UInt8>(source)){ }
     MsgHdr  msgHdr;
-    int sessionID;
+    UInt8 target_type;
+    UInt8 target_id;
+    UInt8 source_type;
+    UInt8 source_id;
 };
 
 

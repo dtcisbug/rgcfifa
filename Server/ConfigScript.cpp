@@ -11,6 +11,7 @@ ConfigScript::ConfigScript( Cfg * cfg )
 	class_add<Cfg>("Cfg");
 	class_def<Cfg>("setServerType", &Cfg::setServerType);
 	class_def<Cfg>("setServerUID", &Cfg::setServerUID);
+	class_def<Cfg>("setServerLogName", &Cfg::setServerLogName);
 	class_def<Cfg>("setTcpPort", &Cfg::setTcpPort);
 	class_def<Cfg>("addConnectList", &Cfg::addConnectList);
 

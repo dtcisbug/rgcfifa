@@ -34,28 +34,30 @@ void GameClient::setChk(UInt8 chk)
     m_ChkOver = time(NULL) + 2*60;
 }
 
-int GameClient::parsePacket( struct evbuffer * buf, int &off, int &len )
+int GameClient::parsePacket( struct evbuffer * buf, int &off, int &len, int& target, int& source)
 {
 	size_t l = evbuffer_get_length(buf);
-	if(l < 4)
+	if(l < 8)
 	{
 		off = 0;
 		len = 0;
 		return 0;
 	}
-	UInt8 * buf_ = static_cast<UInt8 *>(evbuffer_pullup(buf, 4));
+	UInt8 * buf_ = static_cast<UInt8 *>(evbuffer_pullup(buf, 8));
 
 	UInt32 len2 = *reinterpret_cast<UInt16 *>(buf_);
-	if(len2 + 4 > l)
+	if(len2 + 8 > l)
 	{
 		off = 0;
 		len = 0;
 		return 0;
 	}
 
-	off = 4;
-	len = len2 + 4;
+	off = 8;
+	len = len2 + 8;
     //_chk = buf_[2];
+    target = ((static_cast<UInt16>(buf_[4]))<<8) + static_cast<UInt16>(buf_[5]);
+    source = ((static_cast<UInt16>(buf_[6]))<<8) + static_cast<UInt16>(buf_[7]);
 
 	switch(buf_[2])
 	{
@@ -65,10 +67,18 @@ int GameClient::parsePacket( struct evbuffer * buf, int &off, int &len )
 	return 0;
 }
 
-void GameClient::onRecv( int cmd, int len, void * buf )
+void GameClient::onRecv(int cmd, int len, void * buf,int target, int source)
 {
-    ClientMsgHdr hdr( cmd,0, len ,id());
-    GLOBAL().PushMsg( hdr,  buf );
+    if (target > 0)
+    {
+        ProxyMsgHdr hdr(cmd,2,len,id(),target,source);
+        GLOBAL().PushMsg( hdr,  buf );
+    }
+    else
+    {
+        ClientMsgHdr hdr( cmd,0, len ,id());
+        GLOBAL().PushMsg( hdr,  buf );
+    }
 }
 
 void GameClient::onDisconnected()

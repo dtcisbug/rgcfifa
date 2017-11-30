@@ -22,13 +22,18 @@ namespace Network
             int sock = -1;
             if (ss < 0)
 			{
-				if(!ClientConn::enabled())
-					return NULL;
+				//if(!ClientConn::enabled())
+				//	return NULL;
+                if (_server_cfg.GetPortFromConnectMap(-ss) <= 0)
+                    return NULL;
                 sock = socket( AF_INET, SOCK_STREAM, 0 );
-                printf("FD %s: %u\n", __PRETTY_FUNCTION__, sock);
+                //printf("FD %s: %u\n", __PRETTY_FUNCTION__, sock);
+                printf("Host Server Type: %u,Server UID : %u\n",_server_cfg.m_ServerType,_server_cfg.m_ServerUID);
+                printf("Connect Server Type: %u,Server UID : %u\n",(-ss) >> 8,(-ss) & 0xFF);
                 if(sock < 0)
                     return NULL;
-				return new(std::nothrow) ClientConn(sock, s, id, -ss,_server_cfg.GetIpFromConnectMap(-ss),_server_cfg.GetPortFromConnectMap(-ss));
+				//return new(std::nothrow) ClientConn(sock, s, id, -ss,_server_cfg.GetIpFromConnectMap(-ss),_server_cfg.GetPortFromConnectMap(-ss));
+				return new(std::nothrow) ClientConn(sock, s, id, -ss,_server_cfg);
 			}
 			return NULL;
 		}

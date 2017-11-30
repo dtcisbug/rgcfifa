@@ -30,12 +30,12 @@ namespace Network
 	protected:
 		/* len - input the length of buffer, output the length of packet that parsed out
 		   return: packet command */
-		virtual int parsePacket(struct evbuffer * buf, int &off, int &len) { return 0; }
+		virtual int parsePacket(struct evbuffer * buf, int &off, int &len, int& target, int& source) { return 0; }
 
 		/* cmd - packet command
 		   len - length of buffer
 		   buf - buffer without header */
-		virtual void onRecv(int cmd, int len, void * buf) {}
+		virtual void onRecv(int cmd, int len, void * buf,int target, int source) {}
 
 		virtual void onDisconnected() {}
 

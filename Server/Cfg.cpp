@@ -10,7 +10,7 @@
 #include <net/if.h> // for struct ifreq, IF_NAMESIZE
 #endif
 
-Cfg::Cfg( ): tcpPort(8889),serverIp(0), serverLogId(0), dbPort(3306), 
+Cfg::Cfg( ): tcpPort(8889),serverIp(0), serverLogName("Test"), dbPort(3306), 
     debug(false),arenaPort(0),_filename("conf/config_game.lua"),
     channelNum(0), serverNum(0)
 {

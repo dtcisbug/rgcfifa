@@ -38,7 +38,7 @@ namespace GObject
 
     std::string Logic::GetLogName()
     {
-        return "log/World/"; 
+        return "log/" + cfg.serverLogName + "/"; 
     }
             
     MonoString* Logic::TestFunc()
@@ -89,7 +89,15 @@ namespace GObject
 
     void Logic::ProcessLogic(UInt32 cmd_id,char* msgBody,UInt32 len,int sessionID)
     {
-        Logic_Test(this);
+        INFO_LOG("ProcessLogic: %u, sessionID :%u", cmd_id,sessionID);
+        //Logic_Test(this);
+    }
+
+    //转发消息
+    void Logic::ProcessProxyLogic(UInt32 cmd_id,char* msgBody,UInt32 len,UInt8 target_type,UInt8 target_id,UInt8 source_type,UInt8 source_id)
+    {
+        printf("ProcessProxyLogic: %u,target type id is %u : %u,source type id is %u : %u\n", cmd_id,target_type,target_id,source_type,source_id);
+
     }
 
     void Logic::SendMsg(int sessionID,const void * buffer,int size)

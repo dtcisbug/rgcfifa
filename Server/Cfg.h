@@ -18,7 +18,7 @@ public:
     std::string ifName;
     UInt32 serverIp;
 	std::string	scriptPath;
-	UInt32		serverLogId;
+	std::string serverLogName;
 	std::string announceFile;
 
 	std::string	dbHost;
@@ -45,7 +45,7 @@ public:
 
 	void setIfName(const char* iname);
 	inline void setScriptPath(const char * p) {scriptPath = p;}
-	inline void setServerLogId(UInt32 id) {/*serverLogId = id;*/}
+	inline void setServerLogName(const char* name) {serverLogName = name;}
 	inline void setDatabase(const char * h, UInt16 p, const char * u, const char * pw, const char * s )
 	{dbHost = h; dbPort = p; dbUser = u; dbPassword = pw; dbSource = s;}
 	inline void setArenaServer(const char * h, UInt16 p) { arenaHost = h; arenaPort = p; }

@@ -8,14 +8,16 @@ class Stream
 public:
 	static Stream& eos(Stream& st)
 	{
-		st.data<UInt16>() = st.size() - 4;
+		st.data<UInt16>() = st.size() - 8;
 		return st;
 	}
 	Stream(): _pos(0) {}
-	Stream(UInt8 cmd, UInt8 magic = 0xFF): _pos(0)
+	/*
+    Stream(UInt8 cmd, UInt8 magic = 0xFF): _pos(0)
 	{
 		init(cmd, magic);
 	}
+    */
 	Stream(const UInt8 * buf, size_t len): _pos(0)
 	{
 		if(len > 0)
@@ -27,10 +29,17 @@ public:
 	{
 		_buf.assign(v.begin(), v.end());
 	}
-	void init(UInt8 cmd, UInt8 magic = 0xFF)
+    /*
+	void init(UInt8 cmd, UInt8 magic)
 	{
 		UInt8 buf[4] = {0, 0, magic, cmd};
 		_buf.assign(buf, buf + 4);
+	}
+    */
+    Stream(UInt16 cmd,UInt16 target = 0,UInt16 source = 0): _pos(0)
+	{
+		UInt8 buf[8] = {0, 0, cmd >> 8, cmd & 0xFF, target >> 8,target & 0xFF, source >> 8, source & 0xFF};
+		_buf.assign(buf, buf + 8);
 	}
 	inline operator std::vector<UInt8>&() {return _buf;}
 	inline operator UInt8*() {return _buf.empty() ? NULL : &_buf[0];}

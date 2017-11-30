@@ -66,7 +66,7 @@ bool WorldServer::Init(const char * scriptStr, const char * serverName, int num)
     else
         cfg.serverNum = num;
 
-    cfg.serverLogId = cfg.serverNum;
+    //cfg.serverLogId = cfg.serverNum;
 
     m_LogicWorker = new WorkerThread<GObject::Logic>(new GObject::Logic());
     //m_LogicWorker->Run();

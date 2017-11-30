@@ -24,8 +24,8 @@ public:
 	GameClient(int fd, Network::TcpSlaveServer * s, int id);
 
 protected:
-	virtual int	parsePacket(struct evbuffer * buf, int &off, int &len);
-	virtual void onRecv(int cmd, int len, void * buf);
+	virtual int	parsePacket(struct evbuffer * buf, int &off, int &len, int&target, int& source);
+    virtual void onRecv(int cmd, int len, void * buf,int target, int source); 
 
 	virtual void onDisconnected();
 

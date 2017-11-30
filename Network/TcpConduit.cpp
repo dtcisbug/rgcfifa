@@ -65,8 +65,8 @@ namespace Network
 		struct evbuffer * buffer = bufferevent_get_input(_bev);
 		while(1)
 		{
-			int off, len;
-			int cmd = parsePacket(buffer, off, len);
+			int off, len,target,source;
+			int cmd = parsePacket(buffer, off, len,target,source);
 			if(cmd < 0)
 			{
 				forceClose();
@@ -81,7 +81,7 @@ namespace Network
 			else
 			{
 				evbuffer_remove(buffer, data, len);
-			    onRecv(cmd, len - off, data + off);
+			    onRecv(cmd, len - off, data + off,target,source);
 				delete[] data;
 			}
 		}
