@@ -22,8 +22,6 @@ namespace Network
             int sock = -1;
             if (ss < 0)
 			{
-				//if(!ClientConn::enabled())
-				//	return NULL;
                 if (_server_cfg.GetPortFromConnectMap(-ss) <= 0)
                     return NULL;
                 sock = socket( AF_INET, SOCK_STREAM, 0 );
@@ -32,7 +30,6 @@ namespace Network
                 printf("Connect Server Type: %u,Server UID : %u\n",(-ss) >> 8,(-ss) & 0xFF);
                 if(sock < 0)
                     return NULL;
-				//return new(std::nothrow) ClientConn(sock, s, id, -ss,_server_cfg.GetIpFromConnectMap(-ss),_server_cfg.GetPortFromConnectMap(-ss));
 				return new(std::nothrow) ClientConn(sock, s, id, -ss,_server_cfg);
 			}
 			return NULL;
@@ -113,6 +110,54 @@ namespace Network
 		Thread m_TcpThread;
 		TcpMasterServerT<Network::GameClient, TcpSlaveWrapper>* m_TcpService;
 	};
+
+    class TcpClientWrapper
+    {
+        public:
+            TcpClientWrapper()
+            {
+                m_TcpService = new TcpClientServiceT<GameClient, TcpSlaveWrapper>();
+                assert(m_TcpService != NULL);
+                m_Active = true;
+            }
+
+            ~TcpClientWrapper()
+            {
+                delete m_TcpService;
+            }
+
+        public:
+            inline void Start()
+            {
+                m_TcpThread.start(*m_TcpService);
+            }
+            inline void Join()
+            {
+                m_TcpThread.join();
+            }
+
+            inline void UnInit()
+            {
+                m_Active = false;
+                m_TcpService->uninit();
+            }
+
+            inline void Close(int sessionID)
+            {
+                if (!m_Active)
+                    return;
+                m_TcpService->close(sessionID);
+            }
+            void SendMsgToClient(int sessionID, const void * buffer, UInt16 size);
+
+            void SendMsgToClient(int sessionID, Stream& st);
+            void AddConnectServer(UInt16 uid,std::string ip,UInt16 port);
+        private:
+            bool m_Active;
+            Thread m_TcpThread;
+            TcpClientServiceT<Network::GameClient, TcpSlaveWrapper>* m_TcpService;
+    };
+
 
 //////////////////////////////////////////////////////////////////////////
 	template <typename MsgType>
@@ -215,6 +260,38 @@ namespace Network
 			return 0;
 		return m_TcpService->getCount();
 	}
+
+    inline void TcpClientWrapper::SendMsgToClient(int sessionID, const void * buffer, UInt16 size)
+	{
+		if(!m_Active)
+			return;
+		TcpConnection conn = m_TcpService->findConn(sessionID);
+		if(conn.get() == NULL)
+		{
+			return;
+		}
+		conn->send(buffer, size);
+	}
+
+	inline void TcpClientWrapper::SendMsgToClient(int sessionID, Stream& st)
+	{
+		if(!m_Active)
+			return;
+		if (st.size() <= 0) return ;
+		TcpConnection conn = m_TcpService->findConn(sessionID);
+
+		if(conn.get() == NULL)
+		{
+			return;
+		}
+		conn->send(&st[0], st.size());
+	}
+    inline void TcpClientWrapper::AddConnectServer(UInt16 uid,std::string ip,UInt16 port)
+    {
+        
+
+    }
+
 }
 
 #endif

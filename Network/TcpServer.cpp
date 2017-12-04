@@ -14,17 +14,17 @@
 namespace Network
 {
 
-TcpServer::TcpServer():
+TcpService::TcpService():
 	_ev_base(NULL), _running(false)
 {
 	initServer();
 }
 
-TcpServer::~TcpServer()
+TcpService::~TcpService()
 {
 }
 
-void TcpServer::initServer()
+void TcpService::initServer()
 {
 	if(_ev_base != NULL)
 		return;
@@ -38,7 +38,7 @@ void TcpServer::initServer()
 	}
 }
 
-void TcpServer::destroy()
+void TcpService::destroy()
 {
 	if(_ev_base != NULL)
 	{
@@ -47,7 +47,7 @@ void TcpServer::destroy()
 	}
 }
 
-void TcpServer::run()
+void TcpService::run()
 {
 	_running = true;
 	while(_running)
@@ -61,7 +61,7 @@ void TcpServer::run()
 	}
 }
 
-void TcpServer::uninit()
+void TcpService::uninit()
 {
 	_running = false;
 }
@@ -269,7 +269,7 @@ void TcpSlaveServer::destroy()
         event_del(_evTick);
         _evTick = NULL;
     }
-	TcpServer::destroy();
+	TcpService::destroy();
 }
 
 void TcpSlaveServer::_ev_op_event( int, short, void * arg )
@@ -316,7 +316,7 @@ void TcpSlaveServer::onTick(UInt32 now)
 }
 
 TcpMasterServer::TcpMasterServer(ServerCommonConfig server_cfg):
-	TcpServer(), _socket(0), _ev_server(NULL),_server_cfg(server_cfg)
+	TcpService(), _socket(0), _ev_server(NULL),_server_cfg(server_cfg)
 {
 	listen(INADDR_ANY, server_cfg.m_ServerListenPort, 8);
 	evutil_make_socket_nonblocking(_socket);
@@ -474,7 +474,7 @@ UInt32 TcpMasterServer::getCount()
 
 void TcpMasterServer::uninit()
 {
-	TcpServer::uninit();
+	TcpService::uninit();
 	shutdown(_socket, 2);
 	for(int i = 0; i < WORKERS; ++ i)
 	{
@@ -532,5 +532,132 @@ void TcpMasterServer::onTimerCheck()
 	else
 		event_base_loopbreak(_ev_base);
 }
+
+TcpClientService::TcpClientService() :
+    TcpService(),_server_cfg(0xFF,1,0)
+{
+
+}
+
+void TcpClientService::postInitServer()
+{
+    {
+        TcpSlaveServer * s = newWorker(0);
+        _workers.push_back(std::shared_ptr<TcpSlaveServer>(s));
+    }
+
+    {
+        _workerThreads.start(*_workers[0]);
+    }
+
+    _ev_timer = event_new(_ev_base, -1, EV_PERSIST, _ev_timer_event, this);
+    if (_ev_timer != NULL)
+    {
+        struct timeval tv = { 5, 0 };
+        event_add(_ev_timer, &tv);
+    }
+}
+
+void TcpClientService::remove(int id)
+{
+    _workers[0]->remove(id);
+}
+
+void TcpClientService::close(int id)
+{
+    if (id == -1)
+        return;
+
+    TcpSlaveServer * server = _workers[0].get();
+    UInt32 rid = id;
+    if (rid >= server->_conduits.size() || server->_conduits[rid].get() == NULL)
+        return;
+    server->_conduits[rid]->closeConn();
+}
+
+void TcpClientService::closeConn(int id)
+{
+    int rid = -1 - id;
+    if (rid >= TCP_CONN_IDX_MAX)
+        return;
+    if (rid < 0)
+        close(id);
+    else
+        close(_workers[0]->_connUp[rid]);
+}
+
+const std::shared_ptr<TcpConduit> TcpClientService::findConn( int id )
+{
+    if (id > 0)
+        return find(id);
+    int rid = -id;
+	return find(_workers[0]->_connUp[rid]);
+}
+
+const std::shared_ptr<TcpConduit> TcpClientService::find( int id )
+{
+	if(id == -1)
+		return _empty;
+
+	TcpSlaveServer * server = _workers[0].get();
+	Mutex::ScopedLock lk(server->_mutex);
+	UInt32 rid = id / WORKERS;
+	if(rid >= server->_conduits.size())
+		return _empty;
+	return server->_conduits[rid];
+}
+
+void TcpClientService::AddConnectServer(UInt16 uid,std::string ip,UInt16 port)
+{
+    _server_cfg.AddConnectList(uid,ip,port); 
+	TcpSlaveServer * server = _workers[0].get();
+	Mutex::ScopedLock lk(server->_mutex);
+    server->setServerConfig(_server_cfg);
+}
+
+UInt32 TcpClientService::getCount()
+{
+    UInt32 count = 0;
+    count += _workers[0]->getCount();
+    return count;
+}
+
+void TcpClientService::uninit()
+{
+    TcpService::uninit();
+
+    _workers[0]->uninit();
+    _workerThreads.join();
+}
+
+void TcpClientService::destroy()
+{
+    if (_ev_timer != NULL)
+    {
+        struct event * ev = _ev_timer;
+        event_del(ev);
+        event_free(ev);
+    }
+}
+
+void TcpClientService::_ev_timer_event(int, short, void * param)
+{
+    static_cast<TcpClientService *>(param)->onTimerCheck();
+}
+
+void TcpClientService::onTimerCheck()
+{
+    if (_running)
+    {
+        for (auto& iter : _server_cfg.m_ServerConnectMap)
+        {
+            _workers[0]->initConnection(iter.first);
+        }
+    }
+    else
+        event_base_loopbreak(_ev_base);
+}
+
+
 
 }

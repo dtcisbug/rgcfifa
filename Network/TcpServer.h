@@ -17,12 +17,12 @@ namespace Network
 	#define WORKERS 2
 	#define TCP_CONN_IDX_MAX 2  
 
-	class TcpServer:
+	class TcpService:
 		public Runnable
 	{
 	public:
-		TcpServer();
-		virtual ~TcpServer();
+		TcpService();
+		virtual ~TcpService();
 		virtual void destroy();
 		void run();
 		virtual void uninit();
@@ -40,11 +40,12 @@ namespace Network
 
 	class TcpMasterServer;
 	class TcpSlaveServer:
-		public TcpServer
+		public TcpService
 	{
 		friend class TcpMasterServer;
+		friend class TcpClientService;
 	public:
-		TcpSlaveServer(UInt32 idx): TcpServer(), _slave_idx(idx), _count(0), _evOp(NULL), _evTick(NULL), _server_cfg(0,0,0) 
+		TcpSlaveServer(UInt32 idx): TcpService(), _slave_idx(idx), _count(0), _evOp(NULL), _evTick(NULL), _server_cfg(0,0,0) 
         { 
         }
 		void initConnection(int = 1);
@@ -104,7 +105,7 @@ namespace Network
 	};
 
 	class TcpMasterServer:
-		public TcpServer
+		public TcpService
 	{
 	public:
 		TcpMasterServer(ServerCommonConfig server_cfg);
@@ -141,31 +142,33 @@ namespace Network
         ServerCommonConfig _server_cfg;
 	};
 
-    class TcpClientServer:
-		public TcpServer
+    class TcpClientService:
+		public TcpService
 	{
 	public:
-		TcpClientServer();
+		TcpClientService();
 		void remove(int id);
 		void close(int id);
 		void closeConn(int id);
+        UInt32 getCount();
 		virtual void uninit();
 		virtual void destroy();
+		const std::shared_ptr<TcpConduit> findConn(int id);
+        const std::shared_ptr<TcpConduit> find( int id );
+        void AddConnectServer(UInt16 uid,std::string ip,UInt16 port);
 
 	protected:
 		void postInitServer();
 		virtual TcpSlaveServer * newWorker(int) = 0;
-		static void _ev_server_event(int, short, void *);
-		void on_server_write();
-		void on_server_read();
 		static void _ev_timer_event(int, short, void *);
 		void onTimerCheck();
 
 	private:
-		struct event * _ev_server, * _ev_timer;
+		struct event *_ev_timer;
 		std::shared_ptr<TcpConduit> _empty;
 		Thread _workerThreads;
 		std::vector<std::shared_ptr<TcpSlaveServer> > _workers;
+        ServerCommonConfig _server_cfg;
 	};
 
 
@@ -179,6 +182,16 @@ namespace Network
 		virtual TcpConduit * newConduit(int ss, TcpSlaveServer * s, int id) { return new(std::nothrow) T(ss, s, id); }
 		virtual TcpConduit * newConnection(int, TcpSlaveServer *, int) { return NULL; }
 	};
+
+    template<class T = TcpConduit, class SL = TcpSlaveServerT<T> >
+        class TcpClientServiceT:
+            public TcpClientService 
+    {
+        public:
+            TcpClientServiceT(): TcpClientService() {}
+        protected:
+            TcpSlaveServer * newWorker(int idx) { return new SL(idx); }
+    };
 
 	template<class T = TcpConduit, class SL = TcpSlaveServerT<T> >
 	class TcpMasterServerT:
