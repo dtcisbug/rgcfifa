@@ -288,7 +288,7 @@ namespace Network
 	}
     inline void TcpClientWrapper::AddConnectServer(UInt16 uid,std::string ip,UInt16 port)
     {
-        
+		m_TcpService->AddConnectServer(uid,ip,port);
 
     }
 

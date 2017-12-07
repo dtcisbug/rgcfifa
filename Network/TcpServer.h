@@ -17,6 +17,12 @@ namespace Network
 	#define WORKERS 2
 	#define TCP_CONN_IDX_MAX 2  
 
+	#ifdef _WIN32
+	#define event_int intptr_t
+	#else
+	#define event_int int
+	#endif
+
 	class TcpService:
 		public Runnable
 	{
@@ -65,10 +71,10 @@ namespace Network
 
 		typedef std::vector<std::shared_ptr<TcpConduit> > _ConduitList;
 
-		static void _ev_op_event(int, short, void *);
+		static void _ev_op_event(event_int, short, void *);
 		void onOpCheck();
 
-        static void _ev_tick_event(int, short, void*);
+        static void _ev_tick_event(event_int, short, void*);
         void onTick(UInt32 now);
 
 		template<typename PredType>
@@ -127,10 +133,10 @@ namespace Network
 	protected:
 		void postInitServer();
 		virtual TcpSlaveServer * newWorker(int) = 0;
-		static void _ev_server_event(int, short, void *);
+		static void _ev_server_event(event_int, short, void *);
 		void on_server_write();
 		void on_server_read();
-		static void _ev_timer_event(int, short, void *);
+		static void _ev_timer_event(event_int, short, void *);
 		void onTimerCheck();
 
 	private:
@@ -160,7 +166,7 @@ namespace Network
 	protected:
 		void postInitServer();
 		virtual TcpSlaveServer * newWorker(int) = 0;
-		static void _ev_timer_event(int, short, void *);
+		static void _ev_timer_event(event_int, short, void *);
 		void onTimerCheck();
 
 	private:

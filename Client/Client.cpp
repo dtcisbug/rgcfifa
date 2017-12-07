@@ -13,6 +13,7 @@ Client::Client() : m_IsActive(false)
 
 Client::~Client()
 {
+	delete m_TcpService;
 }
 
 bool Client::Init()
@@ -20,6 +21,8 @@ bool Client::Init()
     Network::Initialize();
 	//读取配置文件
 	TimeUtil::Init();
+
+	m_TcpService = new Network::TcpClientWrapper();
 
     return true;
 }
@@ -40,13 +43,12 @@ bool Client::IsActive() const
 }
 
 void Client::Run()
-{
-	m_TcpService = new Network::TcpClientWrapper();
+{	
 	m_TcpService->Start();
 
-	m_TcpService->Join();
+	//m_TcpService->Join();
 
-	delete m_TcpService;
+	//delete m_TcpService;
 }
 
 void Client::Shutdown()

@@ -79,6 +79,7 @@ int ClientConn::parsePacket( struct evbuffer * buf, int &off, int &len, int& tar
 void ClientConn::onRecv(int cmd, int len, void * buf,int target, int source)
 {
 	ProxyMsgHdr hdr( cmd, 1, id(), len ,target,source);
+	//printf("mssssssssssssssssssssssssssssssssg is %c !!!!\n", (char*)((char*)buf));
 	GLOBAL().PushMsg( hdr, buf );
 }
 

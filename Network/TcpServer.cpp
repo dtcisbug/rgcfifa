@@ -272,7 +272,7 @@ void TcpSlaveServer::destroy()
 	TcpService::destroy();
 }
 
-void TcpSlaveServer::_ev_op_event( int, short, void * arg )
+void TcpSlaveServer::_ev_op_event(event_int, short, void * arg )
 {
 	static_cast<TcpSlaveServer *>(arg)->onOpCheck();
 }
@@ -301,7 +301,7 @@ void TcpSlaveServer::onOpCheck()
 	}
 }
 
-void TcpSlaveServer::_ev_tick_event(int, short, void* arg)
+void TcpSlaveServer::_ev_tick_event(event_int, short, void* arg)
 {
     static_cast<TcpSlaveServer*>(arg)->onTick(TimeUtil::Now());
 }
@@ -483,7 +483,7 @@ void TcpMasterServer::uninit()
 	}
 }
 
-void TcpMasterServer::_ev_server_event( int fd, short fl, void * arg )
+void TcpMasterServer::_ev_server_event(event_int fd, short fl, void * arg )
 {
 	TcpMasterServer * svr = static_cast<TcpMasterServer *>(arg);
 	if(fl & EV_WRITE)
@@ -515,7 +515,7 @@ void TcpMasterServer::destroy()
 	}
 }
 
-void TcpMasterServer::_ev_timer_event( int, short, void * param )
+void TcpMasterServer::_ev_timer_event(event_int, short, void * param )
 {
 	static_cast<TcpMasterServer *>(param)->onTimerCheck();
 }
@@ -543,6 +543,7 @@ void TcpClientService::postInitServer()
 {
     {
         TcpSlaveServer * s = newWorker(0);
+		s->setServerConfig(_server_cfg);
         _workers.push_back(std::shared_ptr<TcpSlaveServer>(s));
     }
 
@@ -610,9 +611,9 @@ const std::shared_ptr<TcpConduit> TcpClientService::find( int id )
 void TcpClientService::AddConnectServer(UInt16 uid,std::string ip,UInt16 port)
 {
     _server_cfg.AddConnectList(uid,ip,port); 
-	TcpSlaveServer * server = _workers[0].get();
+	/*TcpSlaveServer * server = _workers[0].get();
 	Mutex::ScopedLock lk(server->_mutex);
-    server->setServerConfig(_server_cfg);
+    server->setServerConfig(_server_cfg);*/
 }
 
 UInt32 TcpClientService::getCount()
@@ -640,7 +641,7 @@ void TcpClientService::destroy()
     }
 }
 
-void TcpClientService::_ev_timer_event(int, short, void * param)
+void TcpClientService::_ev_timer_event(event_int, short, void * param)
 {
     static_cast<TcpClientService *>(param)->onTimerCheck();
 }

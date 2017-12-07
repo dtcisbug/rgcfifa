@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8D6DC8E4-564E-397E-BB05-65BEE0D8DA1E}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>rgc_client</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v141</PlatformToolset>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\..\\bin\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">rgc_client.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">rgc_client</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\ProjectTen\GameServer\NewFramework\New_Server\Server\lib\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">rgc_client.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">rgc_client</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">E:\ProjectTen\GameServer\NewFramework\New_Server\Server\lib\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">rgc_client.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">rgc_client</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">E:\ProjectTen\GameServer\NewFramework\New_Server\Server\lib\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">rgc_client.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">rgc_client</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\;$(ProjectDir)\..\..\thirdpart\libevent\build\include;$(ProjectDir)\..\..\thirdpart\libevent\include;$(ProjectDir)\..\..\thirdpart\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -g  -rdynamic -O0</AdditionalOptions>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>CHECK_PTHREAD_RETURN_VALUE;CMAKE_INTDIR="Debug";rgc_client_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;CHECK_PTHREAD_RETURN_VALUE;CMAKE_INTDIR=\"Debug\";rgc_client_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>rgc_base.lib;rgc_net.lib;zlib.lib;event.lib;ws2_32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\Server\bin\Debug;$(ProjectDir)\..\..\thirdpart\zlib;$(ProjectDir)\..\..\thirdpart\libevent;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/ProjectTen/GameServer/NewFramework/New_Server/Server/lib/Debug/rgc_client.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/ProjectTen/GameServer/NewFramework/New_Server/Server/lib/Debug/rgc_client.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -g -Wextra -Wno-unused-parameter -Woverloaded-virtual -Wpointer-arith -Wshadow -Wwrite-strings -march=native -rdynamic -finline-limit=1000</AdditionalOptions>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>CHECK_PTHREAD_RETURN_VALUE;NDEBUG;CMAKE_INTDIR="Release";rgc_client_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;CHECK_PTHREAD_RETURN_VALUE;NDEBUG;CMAKE_INTDIR=\"Release\";rgc_client_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\lib\Release\rgc_base.lib;..\lib\Release\rgc_net.lib;..\lib\Release\rgc_base.lib;pthread.lib;z.lib;m.lib;event.lib;event_pthreads.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/ProjectTen/GameServer/NewFramework/New_Server/Server/lib/Release/rgc_client.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/ProjectTen/GameServer/NewFramework/New_Server/Server/lib/Release/rgc_client.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -g -Wextra -Wno-unused-parameter -Woverloaded-virtual -Wpointer-arith -Wshadow -Wwrite-strings -march=native -rdynamic</AdditionalOptions>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>CHECK_PTHREAD_RETURN_VALUE;NDEBUG;CMAKE_INTDIR="MinSizeRel";rgc_client_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;CHECK_PTHREAD_RETURN_VALUE;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\";rgc_client_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\lib\MinSizeRel\rgc_base.lib;..\lib\MinSizeRel\rgc_net.lib;..\lib\MinSizeRel\rgc_base.lib;pthread.lib;z.lib;m.lib;event.lib;event_pthreads.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/ProjectTen/GameServer/NewFramework/New_Server/Server/lib/MinSizeRel/rgc_client.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/ProjectTen/GameServer/NewFramework/New_Server/Server/lib/MinSizeRel/rgc_client.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -g -Wextra -Wno-unused-parameter -Woverloaded-virtual -Wpointer-arith -Wshadow -Wwrite-strings -march=native -rdynamic</AdditionalOptions>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>CHECK_PTHREAD_RETURN_VALUE;NDEBUG;CMAKE_INTDIR="RelWithDebInfo";rgc_client_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;CHECK_PTHREAD_RETURN_VALUE;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";rgc_client_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\ProjectTen\GameServer\NewFramework\New_Server\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\lib\RelWithDebInfo\rgc_base.lib;..\lib\RelWithDebInfo\rgc_net.lib;..\lib\RelWithDebInfo\rgc_base.lib;pthread.lib;z.lib;m.lib;event.lib;event_pthreads.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/ProjectTen/GameServer/NewFramework/New_Server/Server/lib/RelWithDebInfo/rgc_client.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/ProjectTen/GameServer/NewFramework/New_Server/Server/lib/RelWithDebInfo/rgc_client.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version>
+      </Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\;$(ProjectDir)\..\..\thirdpart\libevent\build\include;$(ProjectDir)\..\..\thirdpart\libevent\include;$(ProjectDir)\..\..\thirdpart\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>rgc_base.lib;event.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\thirdpart\libevent;$(ProjectDir)\..\..\thirdpart\zlib;$(ProjectDir)\..\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>event.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\x64\Debug;E:\ProjectTen\GameServer\NewFramework\New_Server\thirdpart\x64;E:\ProjectTen\GameServer\NewFramework\New_Server\thirdpart\zlib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HE:/ProjectTen/GameServer/NewFramework/New_Server/Server -BE:/ProjectTen/GameServer/NewFramework/New_Server/Server --check-stamp-file E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeLists.txt;E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeLists.txt;E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HE:/ProjectTen/GameServer/NewFramework/New_Server/Server -BE:/ProjectTen/GameServer/NewFramework/New_Server/Server --check-stamp-file E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeLists.txt;E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeLists.txt;E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HE:/ProjectTen/GameServer/NewFramework/New_Server/Server -BE:/ProjectTen/GameServer/NewFramework/New_Server/Server --check-stamp-file E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeLists.txt;E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeLists.txt;E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HE:/ProjectTen/GameServer/NewFramework/New_Server/Server -BE:/ProjectTen/GameServer/NewFramework/New_Server/Server --check-stamp-file E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">E:/ProjectTen/GameServer/NewFramework/New_Server/Server/Client/CMakeLists.txt;E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeLists.txt;E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Common\Ascii.cpp" />
+    <ClCompile Include="..\Common\AtomicCounter.cpp" />
+    <ClCompile Include="..\Common\Bugcheck.cpp" />
+    <ClCompile Include="..\Common\Config.cpp" />
+    <ClCompile Include="..\Common\Debugger.cpp" />
+    <ClCompile Include="..\Common\DigestEngine.cpp" />
+    <ClCompile Include="..\Common\DirectoryIterator.cpp" />
+    <ClCompile Include="..\Common\Environment.cpp" />
+    <ClCompile Include="..\Common\ErrorHandler.cpp" />
+    <ClCompile Include="..\Common\Event.cpp" />
+    <ClCompile Include="..\Common\Exception.cpp" />
+    <ClCompile Include="..\Common\File.cpp" />
+    <ClCompile Include="..\Common\LoadingCounter.cpp" />
+    <ClCompile Include="..\Common\MemBlockPool.cpp" />
+    <ClCompile Include="..\Common\Mutex.cpp" />
+    <ClCompile Include="..\Common\NumberFormatter.cpp" />
+    <ClCompile Include="..\Common\Path.cpp" />
+    <ClCompile Include="..\Common\PseudoRandom.cpp" />
+    <ClCompile Include="..\Common\Random.cpp" />
+    <ClCompile Include="..\Common\RandomStream.cpp" />
+    <ClCompile Include="..\Common\RefCountedObject.cpp" />
+    <ClCompile Include="..\Common\Runnable.cpp" />
+    <ClCompile Include="..\Common\SHA1Engine.cpp" />
+    <ClCompile Include="..\Common\SignalHandler.cpp" />
+    <ClCompile Include="..\Common\StringTokenizer.cpp" />
+    <ClCompile Include="..\Common\Thread.cpp" />
+    <ClCompile Include="..\Common\ThreadLocal.cpp" />
+    <ClCompile Include="..\Common\Timespan.cpp" />
+    <ClCompile Include="..\Common\Timestamp.cpp" />
+    <ClCompile Include="..\Common\TimeUtil.cpp" />
+    <ClCompile Include="..\Common\TInf.cpp" />
+    <ClCompile Include="..\Common\URandom.cpp" />
+    <ClCompile Include="..\Network\ClientConn.cpp" />
+    <ClCompile Include="..\Network\GameClient.cpp" />
+    <ClCompile Include="..\Network\Network.cpp" />
+    <ClCompile Include="..\Network\TcpConduit.cpp" />
+    <ClCompile Include="..\Network\TcpServer.cpp" />
+    <ClCompile Include="E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\GlobalObject.cpp" />
+    <ClCompile Include="E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\Client.cpp" />
+    <ClCompile Include="E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\Log.cpp" />
+    <ClCompile Include="E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Client\dllmain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Common\rgc_base.vcxproj">
+      <Project>{5C63B7C3-847B-30BE-BFF1-3C3D20C2C220}</Project>
+      <Name>rgc_base</Name>
+    </ProjectReference>
+    <ProjectReference Include="E:\ProjectTen\GameServer\NewFramework\New_Server\Server\Network\rgc_net.vcxproj">
+      <Project>{07645840-F6DA-3EBC-9216-A12F44204FDA}</Project>
+      <Name>rgc_net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Common\Ascii.h" />
+    <ClInclude Include="..\Common\AtomicCounter.h" />
+    <ClInclude Include="..\Common\AtomicVal.h" />
+    <ClInclude Include="..\Common\AutoPtr.h" />
+    <ClInclude Include="..\Common\BaseThread.h" />
+    <ClInclude Include="..\Common\BinaryReader.h" />
+    <ClInclude Include="..\Common\Buffer.h" />
+    <ClInclude Include="..\Common\BufferAllocator.h" />
+    <ClInclude Include="..\Common\BufferedStreamBuf.h" />
+    <ClInclude Include="..\Common\Bugcheck.h" />
+    <ClInclude Include="..\Common\Compat.h" />
+    <ClInclude Include="..\Common\Config.h" />
+    <ClInclude Include="..\Common\Debugger.h" />
+    <ClInclude Include="..\Common\DigestEngine.h" />
+    <ClInclude Include="..\Common\DirectoryIterator.h" />
+    <ClInclude Include="..\Common\Environment.h" />
+    <ClInclude Include="..\Common\ErrorHandler.h" />
+    <ClInclude Include="..\Common\Event.h" />
+    <ClInclude Include="..\Common\Exception.h" />
+    <ClInclude Include="..\Common\File.h" />
+    <ClInclude Include="..\Common\File_UNIX.h" />
+    <ClInclude Include="..\Common\File_WIN32.h" />
+    <ClInclude Include="..\Common\HashList.h" />
+    <ClInclude Include="..\Common\HashTable.h" />
+    <ClInclude Include="..\Common\Itoa.h" />
+    <ClInclude Include="..\Common\LoadingCounter.h" />
+    <ClInclude Include="..\Common\MemBlockPool.h" />
+    <ClInclude Include="..\Common\Mutex.h" />
+    <ClInclude Include="..\Common\Node.h" />
+    <ClInclude Include="..\Common\Noncopyable.h" />
+    <ClInclude Include="..\Common\NumberFormatter.h" />
+    <ClInclude Include="..\Common\Path.h" />
+    <ClInclude Include="..\Common\Platform.h" />
+    <ClInclude Include="..\Common\PseudoRandom.h" />
+    <ClInclude Include="..\Common\Queue.h" />
+    <ClInclude Include="..\Common\Random.h" />
+    <ClInclude Include="..\Common\RandomStream.h" />
+    <ClInclude Include="..\Common\RefCountedObject.h" />
+    <ClInclude Include="..\Common\Runnable.h" />
+    <ClInclude Include="..\Common\ScopedLock.h" />
+    <ClInclude Include="..\Common\Serialize.h" />
+    <ClInclude Include="..\Common\ServerCommon.h" />
+    <ClInclude Include="..\Common\SHA1Engine.h" />
+    <ClInclude Include="..\Common\SignalHandler.h" />
+    <ClInclude Include="..\Common\Singleton.h" />
+    <ClInclude Include="..\Common\SingletonHolder.h" />
+    <ClInclude Include="..\Common\Stream.h" />
+    <ClInclude Include="..\Common\StreamUtil.h" />
+    <ClInclude Include="..\Common\StringTokenizer.h" />
+    <ClInclude Include="..\Common\StringUtil.h" />
+    <ClInclude Include="..\Common\Thread.h" />
+    <ClInclude Include="..\Common\ThreadLocal.h" />
+    <ClInclude Include="..\Common\Timespan.h" />
+    <ClInclude Include="..\Common\Timestamp.h" />
+    <ClInclude Include="..\Common\TimeUtil.h" />
+    <ClInclude Include="..\Common\TInf.h" />
+    <ClInclude Include="..\Common\Unzipper.h" />
+    <ClInclude Include="..\Common\URandom.h" />
+    <ClInclude Include="..\Network\ClientConn.h" />
+    <ClInclude Include="..\Network\GameClient.h" />
+    <ClInclude Include="..\Network\Network.h" />
+    <ClInclude Include="..\Network\TcpConduit.h" />
+    <ClInclude Include="..\Network\TcpServer.h" />
+    <ClInclude Include="..\Network\TcpServerWrapper.h" />
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="GlobalObject.h" />
+    <ClInclude Include="Log.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
