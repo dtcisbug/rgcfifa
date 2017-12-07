@@ -39,6 +39,7 @@ void ClientConn::initConnection()
             (static_cast<UInt16>(1) << 8) + static_cast<UInt16>(1),
             (static_cast<UInt16>(_server_cfg.m_ServerType) << 8) + static_cast<UInt16>(_server_cfg.m_ServerUID)
             );
+    st << "asdadsadsdsa";
     st << Stream::eos;
 	send(&st[0], st.size());
 }

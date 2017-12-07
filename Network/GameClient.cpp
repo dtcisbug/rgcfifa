@@ -69,9 +69,9 @@ int GameClient::parsePacket( struct evbuffer * buf, int &off, int &len, int& tar
 
 void GameClient::onRecv(int cmd, int len, void * buf,int target, int source)
 {
-    if (target > 0)
+    if (target > 0 && (source >> 8) != 0xFF)
     {
-        ProxyMsgHdr hdr(cmd,2,len,id(),target,source);
+        ProxyMsgHdr hdr(cmd,2,id(),len,target,source);
         GLOBAL().PushMsg( hdr,  buf );
     }
     else

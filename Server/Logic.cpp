@@ -91,6 +91,13 @@ namespace GObject
     {
         INFO_LOG("ProcessLogic: %u, sessionID :%u", cmd_id,sessionID);
         //Logic_Test(this);
+        Stream st(static_cast<UInt16>(0x111),
+            (static_cast<UInt16>(1) << 8) + static_cast<UInt16>(1),
+            (static_cast<UInt16>(0xFF) << 8) + static_cast<UInt16>(1)
+            );
+        st << "asdadadasdasd";
+        st << Stream::eos;
+        SendMsg(sessionID,&st[0],st.size());
     }
 
     //转发消息

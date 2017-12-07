@@ -23,22 +23,19 @@ bool MsgPopHandler::ProcessMsg()
         {
             case CLIENT_MSGTYPE:
                 {
-                    ClientMsgHdr msg1;
-                    char* msgBody = (char*)((ClientMsgHdr*)hdr + 1);
+                    char* msgBody = (char*)(hdr) + sizeof(ClientMsgHdr);
                     LOGIC().ProcessLogic(hdr->cmdID,msgBody,hdr->bodyLen,hdr->sessionID); 
                 }
                 break;
             case SERVER_MSGTYPE:
                 {
-                    ProxyMsgHdr msg1;
-                    char* msgBody = (char*)((ProxyMsgHdr*)hdr + 1);
+                    char* msgBody = (char*)(hdr) + sizeof(SERVER_MSGTYPE);
                     LOGIC().ProcessLogic(hdr->cmdID,msgBody,hdr->bodyLen,hdr->sessionID); 
                 }
                 break;
             case PROXY_MSGTYPE:
                 {
-                    ProxyMsgHdr msg1;
-                    char* msgBody = (char*)((ProxyMsgHdr*)hdr + 1);
+                    char* msgBody = (char*)(hdr) + sizeof(PROXY_MSGTYPE);
                     ProxyMsgHdr* phdr = (ProxyMsgHdr*)hdr;
                     LOGIC().ProcessProxyLogic(hdr->cmdID,msgBody,hdr->bodyLen,phdr->target_type,phdr->target_id,phdr->source_id,phdr->source_type); 
                 }
