@@ -13,7 +13,8 @@ set(net_SRCS
   )
 
 ADD_EXECUTABLE(rgc_server ${net_SRCS})
-target_link_libraries(rgc_server rgc_base rgc_net ${SCRIPT_LIB} dl mono-2.0)
+#target_link_libraries(rgc_server rgc_base rgc_net ${SCRIPT_LIB} dl mono-2.0 )
+target_link_libraries(rgc_server rgc_base rgc_net ${SCRIPT_LIB} dl ${MONO_LIB} rt)
 
 install(TARGETS rgc_server DESTINATION bin)
 

@@ -71,12 +71,12 @@ void GameClient::onRecv(int cmd, int len, void * buf,int target, int source)
 {
     if (target > 0 && (source >> 8) != 0xFF)
     {
-        ProxyMsgHdr hdr(cmd,2,id(),len,target,source);
+        ProxyMsgHdr hdr(cmd,PROXY_MSGTYPE,id(),len,target,source);
         GLOBAL().PushMsg( hdr,  buf );
     }
     else
     {
-        ClientMsgHdr hdr( cmd,0, len ,id());
+        ClientMsgHdr hdr( cmd,CLIENT_MSGTYPE, len ,id());
         GLOBAL().PushMsg( hdr,  buf );
     }
 }

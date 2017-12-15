@@ -1,6 +1,6 @@
 #include "Common/Config.h"
 #include "Network.h"
-#include "Common/TInf.h"
+//#include "Common/TInf.h"
 #include <event2/thread.h>
 
 namespace Network
@@ -14,7 +14,7 @@ namespace Network
 #else
 		evthread_use_pthreads();
 #endif
-		tinf_init();
+		//tinf_init();
 	}
 	void Uninitialize()
 	{

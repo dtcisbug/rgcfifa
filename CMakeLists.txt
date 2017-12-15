@@ -23,6 +23,7 @@ set(CXX_FLAGS
  -march=native
  -std=c++11
  -rdynamic
+ -pg
  )
 if(CMAKE_BUILD_BITS EQUAL 32)
   list(APPEND CXX_FLAGS "-m32")
@@ -36,6 +37,8 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 FIND_LIBRARY(SCRIPT_LIB libscript.a ./script)
+#FIND_LIBRARY(MONO_LIB libmonosgen-2.0.a ./thirdpart)
+FIND_LIBRARY(MONO_LIB libmonoboehm-2.0.a ./thirdpart)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
