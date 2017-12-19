@@ -113,9 +113,11 @@ namespace GObject
             printf("method is null!!!\n");
             return;
         }
+		if (len <= 2)
+			return;
         char length[2];
         memcpy(length,msgBody,2);
-        char body[len-2];
+        char* body = new char[len-2];
         memcpy(body,msgBody+2,len-2);
         //MonoString* str = mono_string_new (mono_domain_get (), (char*)body);
         MonoArray* array = mono_array_new(mono_domain_get (),mono_get_byte_class (),len-2);
@@ -124,7 +126,7 @@ namespace GObject
         void* args[] = { &sessionID,&cmd_id,array,&packet_len};
         //调用方法
         mono_runtime_invoke(entry_point_method, NULL, args, NULL);
-
+		delete body;
     }
 
     //转发消息

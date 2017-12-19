@@ -151,7 +151,13 @@ namespace Network
             void SendMsgToClient(int sessionID, const void * buffer, UInt16 size);
 
             void SendMsgToClient(int sessionID, Stream& st);
+
             void AddConnectServer(UInt16 uid,std::string ip,UInt16 port);
+
+			int GetLoginSession();
+
+			bool GetConnStatus(int sessionID);
+
         private:
             bool m_Active;
             Thread m_TcpThread;
@@ -265,7 +271,7 @@ namespace Network
 	{
 		if(!m_Active)
 			return;
-		TcpConnection conn = m_TcpService->findConn(sessionID);
+		TcpConnection conn = m_TcpService->findConn(-sessionID);
 		if(conn.get() == NULL)
 		{
 			return;
@@ -291,6 +297,24 @@ namespace Network
 		m_TcpService->AddConnectServer(uid,ip,port);
 
     }
+
+	inline int TcpClientWrapper::GetLoginSession()
+	{
+		return 0xFF00;
+	}
+
+	inline bool TcpClientWrapper::GetConnStatus(int sessionID)
+	{
+		TcpConnection conn = m_TcpService->findConn(sessionID);
+
+		if (conn.get() == NULL)
+		{
+			return false;
+		}
+
+		return true;
+	}
+	
 
 }
 

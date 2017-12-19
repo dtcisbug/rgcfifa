@@ -2,13 +2,21 @@
 #include "Client.h"
 #include "Network/TcpServerWrapper.h"
 #include "GlobalObject.h"
+#include <stdint.h>
 
 extern"C" _declspec(dllexport) void init_Client();
 void init_Client()
 {
 	GLOBAL().Init();
     CLIENT().Init();
-	CLIENT_NETWORK()->AddConnectServer(65281, "172.104.81.33", 8100);
+	//CLIENT_NETWORK()->AddConnectServer(65281, "172.104.81.33", 8100);
+	for (size_t i = 1; i <= 0xFF; i++)
+	{
+		CLIENT_NETWORK()->AddConnectServer(0xFF00 + i, "27.109.126.143", 8100);
+		//CLIENT_NETWORK()->AddConnectServer(65281+i, "127.0.0.1", 8100);
+	}
+	//CLIENT_NETWORK()->AddConnectServer(0xFF00 + 1, "27.109.126.143", 8100);
+	//CLIENT_NETWORK()->AddConnectServer(0xFF00 + 2, "27.109.126.143", 8100);
     CLIENT().Run();
 }
 
@@ -18,10 +26,26 @@ void uninit_Client()
 	GLOBAL().UnInit(); //放在最后处理
 }
 
-extern"C" _declspec(dllexport) void sendMsg(uint32_t sessionID, char* buffer, uint16_t size);
-void sendMsg(uint32_t sessionID,char* buffer,uint16_t size)
+extern"C" _declspec(dllexport) void sendMsg(int sessionID,int cmdid, char* buffer, uint16_t size);
+void sendMsg(int sessionID,int cmdid, char* buffer,uint16_t size)
 {
-    CLIENT_NETWORK()->SendMsgToClient(sessionID,buffer,size);
+	
+	Stream st(static_cast<UInt16>(cmdid),
+		            (static_cast<UInt16>(1) << 8) + static_cast<UInt16>(1), // target 
+		            (static_cast<UInt16>(0xFF) << 8) + static_cast<UInt16>(1) // source
+		);
+	//st << buffer;
+	st << size;
+	st.append((uint8_t*)buffer, size);
+	st << Stream::eos;
+
+    CLIENT_NETWORK()->SendMsgToClient(sessionID,&st[0], st.size());
+}
+
+extern"C" _declspec(dllexport) int getLoginSession();
+int getLoginSession()
+{
+	return CLIENT_NETWORK()->GetLoginSession();
 }
 
 typedef void(__stdcall * ProgressCallback)(short msg_id, const char* msgbody);
@@ -35,7 +59,7 @@ void GetMsg(ProgressCallback cb)
 	do
 	{
 		hdr = msgQueue.Pop();
-		//printf("have msg type is %d !!!!\n", hdr->msgType);
+		printf("have msg type is %d !!!!\n", hdr->msgType);
 		switch (hdr->msgType)
 		{
 		case SERVER_MSGTYPE:
@@ -70,6 +94,10 @@ void close_connect(int id)
     CLIENT_NETWORK()->Close(id);
 }
 
-
+extern"C" _declspec(dllexport) bool get_connect_status(int id);
+bool get_connect_status(int id)
+{
+	return CLIENT_NETWORK()->GetConnStatus(id);
+}
 
 

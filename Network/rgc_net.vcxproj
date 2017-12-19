@@ -307,23 +307,25 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="E:\ProjectTen\New_Server\Server\Network\ClientConn.h" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Network\Network.cpp" />
-    <ClInclude Include="E:\ProjectTen\New_Server\Server\Network\TcpServerWrapper.h" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Network\TcpServer.cpp" />
-    <ClInclude Include="E:\ProjectTen\New_Server\Server\Network\TcpServer.h" />
-    <ClInclude Include="E:\ProjectTen\New_Server\Server\Network\TcpConduit.h" />
-    <ClInclude Include="E:\ProjectTen\New_Server\Server\Network\GameClient.h" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Network\TcpConduit.cpp" />
-    <ClInclude Include="E:\ProjectTen\New_Server\Server\Network\Network.h" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Network\GameClient.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Network\ClientConn.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="E:\ProjectTen\New_Server\Server\Common\rgc_base.vcxproj">
       <Project>{1176E2AD-5BD5-3001-9D45-56151207428A}</Project>
       <Name>rgc_base</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ClientConn.cpp" />
+    <ClCompile Include="GameClient.cpp" />
+    <ClCompile Include="Network.cpp" />
+    <ClCompile Include="TcpConduit.cpp" />
+    <ClCompile Include="TcpServer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ClientConn.h" />
+    <ClInclude Include="GameClient.h" />
+    <ClInclude Include="Network.h" />
+    <ClInclude Include="TcpConduit.h" />
+    <ClInclude Include="TcpServer.h" />
+    <ClInclude Include="TcpServerWrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

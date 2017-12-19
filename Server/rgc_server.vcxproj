@@ -322,17 +322,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Server\Cfg.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Server\ConfigScript.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Server\GlobalObject.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Server\Main.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Server\WorldServer.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Server\Log.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Server\Logic.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\MsgHandler\MsgHandler.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\MsgHandler\MsgPopHandler.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="E:\ProjectTen\New_Server\Server\Common\rgc_base.vcxproj">
       <Project>{1176E2AD-5BD5-3001-9D45-56151207428A}</Project>
       <Name>rgc_base</Name>
@@ -341,6 +330,17 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{42A01DEC-52CD-3129-BB8C-DA3969E429A0}</Project>
       <Name>rgc_net</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\MsgHandler\MsgHandler.cpp" />
+    <ClCompile Include="..\MsgHandler\MsgPopHandler.cpp" />
+    <ClCompile Include="Cfg.cpp" />
+    <ClCompile Include="ConfigScript.cpp" />
+    <ClCompile Include="GlobalObject.cpp" />
+    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Logic.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="WorldServer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

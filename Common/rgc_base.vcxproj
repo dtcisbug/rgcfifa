@@ -5,6 +5,14 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -13,9 +21,17 @@
       <Configuration>MinSizeRel</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="RelWithDebInfo|Win32">
       <Configuration>RelWithDebInfo</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -47,6 +63,19 @@
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v141</PlatformToolset>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -72,6 +101,9 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">rgc_base.dir\RelWithDebInfo\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">rgc_base</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -207,6 +239,11 @@
       <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\thirdpart\zlib;$(ProjectDir)\..\..\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <CustomBuild Include="E:\ProjectTen\New_Server\Server\Common\CMakeLists.txt">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule E:/ProjectTen/New_Server/Server/Common/CMakeLists.txt</Message>
@@ -264,39 +301,39 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\ErrorHandler.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Debugger.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\RandomStream.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\RefCountedObject.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\SHA1Engine.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Environment.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Thread.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Timestamp.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\SignalHandler.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Bugcheck.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Zip.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\File.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Exception.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\TimeUtil.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\URandom.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\NumberFormatter.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Path.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\DirectoryIterator.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Timespan.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\DigestEngine.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\ThreadLocal.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Mutex.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\PseudoRandom.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Random.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Runnable.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\AtomicCounter.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Event.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Ascii.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\TInf.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\StringTokenizer.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\MemBlockPool.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\LoadingCounter.cpp" />
-    <ClCompile Include="E:\ProjectTen\New_Server\Server\Common\Config.cpp" />
+    <ClCompile Include="Ascii.cpp" />
+    <ClCompile Include="AtomicCounter.cpp" />
+    <ClCompile Include="Bugcheck.cpp" />
+    <ClCompile Include="Config.cpp" />
+    <ClCompile Include="Debugger.cpp" />
+    <ClCompile Include="DigestEngine.cpp" />
+    <ClCompile Include="DirectoryIterator.cpp" />
+    <ClCompile Include="Environment.cpp" />
+    <ClCompile Include="ErrorHandler.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="File.cpp" />
+    <ClCompile Include="LoadingCounter.cpp" />
+    <ClCompile Include="MemBlockPool.cpp" />
+    <ClCompile Include="Mutex.cpp" />
+    <ClCompile Include="NumberFormatter.cpp" />
+    <ClCompile Include="Path.cpp" />
+    <ClCompile Include="PseudoRandom.cpp" />
+    <ClCompile Include="Random.cpp" />
+    <ClCompile Include="RandomStream.cpp" />
+    <ClCompile Include="RefCountedObject.cpp" />
+    <ClCompile Include="Runnable.cpp" />
+    <ClCompile Include="SHA1Engine.cpp" />
+    <ClCompile Include="SignalHandler.cpp" />
+    <ClCompile Include="StringTokenizer.cpp" />
+    <ClCompile Include="Thread.cpp" />
+    <ClCompile Include="ThreadLocal.cpp" />
+    <ClCompile Include="Timespan.cpp" />
+    <ClCompile Include="Timestamp.cpp" />
+    <ClCompile Include="TimeUtil.cpp" />
+    <ClCompile Include="TInf.cpp" />
+    <ClCompile Include="URandom.cpp" />
+    <ClCompile Include="Zip.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
