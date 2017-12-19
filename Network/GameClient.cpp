@@ -37,7 +37,7 @@ void GameClient::setChk(UInt8 chk)
 int GameClient::parsePacket( struct evbuffer * buf, int &off, int &len, int& target, int& source)
 {
 	size_t l = evbuffer_get_length(buf);
-	if(l < 8)
+	if(l < 10)
 	{
 		off = 0;
 		len = 0;
@@ -46,24 +46,20 @@ int GameClient::parsePacket( struct evbuffer * buf, int &off, int &len, int& tar
 	UInt8 * buf_ = static_cast<UInt8 *>(evbuffer_pullup(buf, 8));
 
 	UInt32 len2 = *reinterpret_cast<UInt16 *>(buf_);
-	if(len2 + 8 > l)
+	if(len2 + 10 > l)
 	{
 		off = 0;
 		len = 0;
 		return 0;
 	}
 
-	off = 8;
-	len = len2 + 8;
+	off = 10;
+	len = len2 + 10;
     //_chk = buf_[2];
-    target = ((static_cast<UInt16>(buf_[4]))<<8) + static_cast<UInt16>(buf_[5]);
-    source = ((static_cast<UInt16>(buf_[6]))<<8) + static_cast<UInt16>(buf_[7]);
+    target = ((static_cast<UInt16>(buf_[6]))<<8) + static_cast<UInt16>(buf_[7]);
+    source = ((static_cast<UInt16>(buf_[8]))<<8) + static_cast<UInt16>(buf_[9]);
 
-	switch(buf_[2])
-	{
-	default:
-		return ((static_cast<UInt16>(buf_[2]))<<8)+static_cast<UInt16>(buf_[3]);
-	}
+    return ((static_cast<UInt32>(buf_[2]))<<24) + ((static_cast<UInt32>(buf_[3]))<<16) + (static_cast<UInt32>(buf_[4]) << 8) + static_cast<UInt32>(buf_[5]);
 	return 0;
 }
 

@@ -30,7 +30,7 @@ extern"C" _declspec(dllexport) void sendMsg(int sessionID,int cmdid, char* buffe
 void sendMsg(int sessionID,int cmdid, char* buffer,uint16_t size)
 {
 	
-	Stream st(static_cast<UInt16>(cmdid),
+	Stream st(static_cast<UInt32>(cmdid),
 		            (static_cast<UInt16>(1) << 8) + static_cast<UInt16>(1), // target 
 		            (static_cast<UInt16>(0xFF) << 8) + static_cast<UInt16>(1) // source
 		);

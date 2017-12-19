@@ -35,7 +35,7 @@ void ClientConn::initConnection()
 	if(n < 0)
 		throw std::bad_exception();
     // connect reg msg
-	Stream st(static_cast<UInt16>(0x111),
+	Stream st(static_cast<UInt32>(0x111),
             (static_cast<UInt16>(1) << 8) + static_cast<UInt16>(1),
             (static_cast<UInt16>(_server_cfg.m_ServerType) << 8) + static_cast<UInt16>(_server_cfg.m_ServerUID)
             );
@@ -44,11 +44,11 @@ void ClientConn::initConnection()
 	send(&st[0], st.size());
 }
 
-// server packet header 8bytes(len + cmd_id + target + source)
+// server packet header 10bytes(len2 + cmd_id4 + target2 + source2)
 int ClientConn::parsePacket( struct evbuffer * buf, int &off, int &len, int& target, int& source)
 {
 	size_t l = evbuffer_get_length(buf);
-	if(l < 8)
+	if(l < 10)
 	{
 		off = 0;
 		len = 0;
@@ -56,24 +56,21 @@ int ClientConn::parsePacket( struct evbuffer * buf, int &off, int &len, int& tar
 	}
 	UInt8 * buf_ = static_cast<UInt8 *>(evbuffer_pullup(buf, 8));
 	UInt32 len2 = *reinterpret_cast<UInt16 *>(buf_);
-	if(len2 + 8 > l)
+	if(len2 + 10 > l)
 	{
 		off = 0;
 		len = 0;
 		return 0;
 	}
 
-	off = 8;
-	len = len2 + 8;
+	off = 10;
+	len = len2 + 10;
 
-    target = (static_cast<UInt16>(buf_[4]))<<8 + static_cast<UInt16>(buf_[5]);
-    source = (static_cast<UInt16>(buf_[6]))<<8 + static_cast<UInt16>(buf_[7]);
+    target = (static_cast<UInt16>(buf_[6]))<<8 + static_cast<UInt16>(buf_[7]);
+    source = (static_cast<UInt16>(buf_[8]))<<8 + static_cast<UInt16>(buf_[9]);
 
-	switch(buf_[2])
-	{
-	default:
-		return ((static_cast<UInt16>(buf_[2]))<<8)+static_cast<UInt16>(buf_[3]);
-	}
+    //cmdid 4byte idx 2,3,4,5
+    return ((static_cast<UInt32>(buf_[2]))<<24) + ((static_cast<UInt32>(buf_[3]))<<16) + (static_cast<UInt32>(buf_[4]) << 8) + static_cast<UInt32>(buf_[5]);
 	return 0;
 }
 
