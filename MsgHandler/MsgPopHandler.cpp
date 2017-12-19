@@ -49,6 +49,6 @@ bool MsgPopHandler::ProcessMsg()
         GLOBAL().FreeMsgBlock((char *)hdr);
 	}
 	while (!msgQueue.Empty());
-    //printf("Process Msg is Done !!!\n");
+    //printf("Process Msg is Done!!! Now is %d !!!\n",TimeUtil::Now());
 	return true;
 }
