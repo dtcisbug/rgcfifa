@@ -49,7 +49,7 @@ int getLoginSession()
 }
 
 typedef void(__stdcall * ProgressCallback)(short msg_id, const char* msgbody);
-extern"C" _declspec(dllexport) void GetMsg(ProgressCallback cb);
+extern"C" _declspec(dllexport) bool GetMsg(ProgressCallback cb);
 void GetMsg(ProgressCallback cb)
 {
 	MsgQueue msgQueue;
