@@ -2,6 +2,7 @@ cfg:setTcpPort(8102);
 cfg:setServerType(5); -- Game - 0 | DB - 1 | Social - 2 | Login - 3 | Room - 4 | proxy - 5
 cfg:setServerUID(1); 
 cfg:setServerLogName("Proxy1"); 
+cfg:setServerDllName("Game.dll"); 
 -- para: type,uid,ip,port
 --cfg:addConnectList(0,1,"127.0.0.1",8100); --game
 --cfg:addConnectList(1,1,"127.0.0.1",8101); --db

@@ -30,15 +30,15 @@ bool MsgPopHandler::ProcessMsg()
                 break;
             case SERVER_MSGTYPE:
                 {
-                    char* msgBody = (char*)(hdr) + sizeof(SERVER_MSGTYPE);
+                    char* msgBody = (char*)(hdr) + sizeof(ProxyMsgHdr);
                     LOGIC().ProcessLogic(hdr->cmdID,msgBody,hdr->bodyLen,hdr->sessionID); 
                 }
                 break;
             case PROXY_MSGTYPE:
                 {
-                    char* msgBody = (char*)(hdr) + sizeof(PROXY_MSGTYPE);
+                    char* msgBody = (char*)(hdr) + sizeof(ProxyMsgHdr);
                     ProxyMsgHdr* phdr = (ProxyMsgHdr*)hdr;
-                    LOGIC().ProcessProxyLogic(hdr->cmdID,msgBody,hdr->bodyLen,phdr->target_type,phdr->target_id,phdr->source_id,phdr->source_type); 
+                    LOGIC().ProcessProxyLogic(hdr->cmdID,msgBody,hdr->bodyLen,phdr->target_type,phdr->target_id,phdr->source_type,phdr->source_id,hdr->sessionID); 
                 }
                 break;            
             default:

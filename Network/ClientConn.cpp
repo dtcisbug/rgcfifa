@@ -35,11 +35,11 @@ void ClientConn::initConnection()
 	if(n < 0)
 		throw std::bad_exception();
     // connect reg msg
-	Stream st(static_cast<UInt32>(0x111),
-            (static_cast<UInt16>(1) << 8) + static_cast<UInt16>(1),
+	Stream st(static_cast<UInt32>(0x1),
+            (static_cast<UInt16>(_ss) << 8) + (static_cast<UInt16>(_ss) & 0xFF),
             (static_cast<UInt16>(_server_cfg.m_ServerType) << 8) + static_cast<UInt16>(_server_cfg.m_ServerUID)
             );
-    st << "asdadsadsdsa";
+    st << "register_protocol!";
     st << Stream::eos;
 	send(&st[0], st.size());
 }
@@ -76,7 +76,7 @@ int ClientConn::parsePacket( struct evbuffer * buf, int &off, int &len, int& tar
 
 void ClientConn::onRecv(int cmd, int len, void * buf,int target, int source)
 {
-	ProxyMsgHdr hdr( cmd, 1, id(), len ,target,source);
+	ProxyMsgHdr hdr( cmd, SERVER_MSGTYPE,len,id(),target,source);
 	//printf("mssssssssssssssssssssssssssssssssg is %c !!!!\n", (char*)((char*)buf));
 	GLOBAL().PushMsg( hdr, buf );
 }

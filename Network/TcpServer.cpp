@@ -85,7 +85,7 @@ void TcpSlaveServer::postInitServer()
 
 void TcpSlaveServer::initConnection(int stype)
 {
-    if(_connUp.find(stype) != _connUp.end() && _connUp[stype] > 0)
+    if(_connUp.find(stype) != _connUp.end() && _connUp[stype] >= 0)
         return;    
 
 	_connUp[stype] = 0;

@@ -34,7 +34,7 @@ struct ClientMsgHdr
 struct ProxyMsgHdr
 {
     ProxyMsgHdr() { }
-    ProxyMsgHdr(UInt32 id, UInt8 type, int sess, UInt32 blen,int target,int source):
+    ProxyMsgHdr(UInt32 id, UInt8 type,UInt32 blen,int sess,int target,int source):
         msgHdr(id, type, blen,sess),
         target_type(target >> 8),target_id(static_cast<UInt8>(target)),
         source_type(source >> 8),source_id(static_cast<UInt8>(source)){ }

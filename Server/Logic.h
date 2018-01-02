@@ -10,6 +10,7 @@
 #include "Common/TimeUtil.h"
 #include "Network/GameClient.h"
 #include "MsgHandler/MsgTypes.h"
+#include <map>
 
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
@@ -27,14 +28,23 @@ namespace GObject
             bool Init();
             void UnInit();
             std::string GetLogName();
+            void ProcessLogic(UInt32 cmd_id,char* msgBody,UInt32 len,int sessionID);
+            void ProcessRegisteredProtocol(int sessionID);
+            void ProcessProxyLogic(UInt32 cmd_id,char* msgBody,UInt32 len,UInt8 target_type,UInt8 target_id,UInt8 source_type,UInt8 source_id,int sessionID);
+            //export static method
+        public:
             static MonoString* TestFunc();
             static void TestFunc1(int sessionID);
-            void ProcessLogic(UInt32 cmd_id,char* msgBody,UInt32 len,int sessionID);
-            void ProcessProxyLogic(UInt32 cmd_id,char* msgBody,UInt32 len,UInt8 target_type,UInt8 target_id,UInt8 source_type,UInt8 source_id);
-            static void SendMsg(int sessionID,int cmdid,const void * buffer,int size);
+            static void SendMsg(int sessionID,int cmdid,MonoArray * buffer,int size);
+            static void SendMsg2Server(int sessionID,int cmdid,MonoArray* buffer,int size,int target);
+            static void ProxyMsg2Server(int sessionID,int cmdid,const void * buffer,int size,int target,int source);
+            static void GetDBStrcut(MonoString** ip,MonoString** user,MonoString** passwd,MonoString** db,int* port);
         private:
             static void Logic_Test(Logic* logic);
             static void Tick(Logic* logic);
+
+        private:
+            std::map<UInt32,UInt32> m_mLinkedServer;
             
     };
 }
