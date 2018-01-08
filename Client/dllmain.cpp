@@ -9,12 +9,15 @@ void init_Client()
 {
 	GLOBAL().Init();
     CLIENT().Init();
-	//CLIENT_NETWORK()->AddConnectServer(65281, "172.104.81.33", 8100);
+	CLIENT_NETWORK()->AddConnectServer(65281, "172.104.81.33", 8100);
+	CLIENT_NETWORK()->AddConnectServer(65282, "172.104.81.33", 8103);
+	/*
 	for (size_t i = 1; i <= 0xFF; i++)
 	{
 		CLIENT_NETWORK()->AddConnectServer(0xFF00 + i, "27.109.126.143", 8100);
 		//CLIENT_NETWORK()->AddConnectServer(65281+i, "127.0.0.1", 8100);
 	}
+	*/
 	//CLIENT_NETWORK()->AddConnectServer(0xFF00 + 1, "27.109.126.143", 8100);
 	//CLIENT_NETWORK()->AddConnectServer(0xFF00 + 2, "27.109.126.143", 8100);
     CLIENT().Run();
@@ -48,9 +51,9 @@ int getLoginSession()
 	return CLIENT_NETWORK()->GetLoginSession();
 }
 
-typedef void(__stdcall * ProgressCallback)(short msg_id, const char* msgbody);
-extern"C" _declspec(dllexport) bool GetMsg(ProgressCallback cb);
-void GetMsg(ProgressCallback cb)
+typedef bool(__stdcall * ProgressCallback)(uint32_t session_id ,uint16_t size);
+extern"C" _declspec(dllexport) void GetMsg(char* buffer,ProgressCallback cb);
+void GetMsg(char* buffer,ProgressCallback cb)
 {
 	MsgQueue msgQueue;
 	if (!GLOBAL().GetMsgQueue(0, msgQueue))
@@ -67,8 +70,14 @@ void GetMsg(ProgressCallback cb)
 			//char* msgBody = new(std::nothrow) char[hdr->bodyLen];;
 			//memcpy(msgBody,(char*)(hdr) + sizeof(ProxyMsgHdr) + 2,hdr->bodyLen-2);
 			//printf("msg is %s, msg len is %d !!!!\n", (msgBody), hdr->bodyLen); 
+			char length[2]; 
+			memcpy(length, (char*)(hdr)+sizeof(ProxyMsgHdr), 2);
+			UInt16 packet_len = *((UInt16*)length);
 			char* msgBody = (char*)(hdr)+sizeof(ProxyMsgHdr) + 2;
-			cb(hdr->cmdID,msgBody);
+
+			memcpy(buffer, msgBody, packet_len);
+
+			cb(hdr->sessionID, packet_len);
 			//delete[] msgBody;
 		}
 			break;
@@ -82,10 +91,10 @@ void GetMsg(ProgressCallback cb)
 
 }
 
-extern"C" _declspec(dllexport) void add_connect(uint16_t uid, std::string ip, uint16_t port);
-void add_connect(uint16_t uid,std::string ip,uint16_t port)
+extern"C" _declspec(dllexport) void add_connect(uint16_t uid, char* ip, uint16_t port);
+void add_connect(uint16_t uid,char* ip,uint16_t port)
 {
-    CLIENT_NETWORK()->AddConnectServer(uid,ip,port);
+    CLIENT_NETWORK()->AddConnectServer(uid, "172.104.81.33",port);
 }
 
 extern"C" _declspec(dllexport) void close_connect(int id);
