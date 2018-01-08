@@ -14,12 +14,14 @@ struct ServerCommonConfig
 
     void AddConnectList(UInt8 type,UInt8 uid,std::string ip,UInt16 port)
     {
-        m_ServerConnectMap.insert(std::make_pair(static_cast<UInt16>(type << 8) + uid,std::make_tuple(ip,port)));
+        //m_ServerConnectMap.insert(std::make_pair(static_cast<UInt16>(type << 8) + uid,std::make_tuple(ip,port)));
+        m_ServerConnectMap[static_cast<UInt16>(type << 8) + uid] = std::make_tuple(ip,port);
     }
 
     void AddConnectList(UInt16 uid,std::string ip,UInt16 port)
     {
-        m_ServerConnectMap.insert(std::make_pair(uid,std::make_tuple(ip,port)));
+        //m_ServerConnectMap.insert(std::make_pair(uid,std::make_tuple(ip,port)));
+        m_ServerConnectMap[uid] = std::make_tuple(ip,port);
     }
 
     //ServerCommonConfig(const ServerCommonConfig& config)

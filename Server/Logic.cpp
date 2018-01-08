@@ -33,7 +33,7 @@ namespace GObject
         mono_add_internal_call("CommonNetWork.CCommonNetwork::GetDBStrcut", reinterpret_cast<void*>(GetDBStrcut));
 
         //AddTimer(86400 * 1000, Logic_Test,this,10*1000);
-        //AddTimer(30, Tick,this,10*1000);
+        AddTimer(5 * 100, Tick,this,10*1000);
         return true; 
     }
 

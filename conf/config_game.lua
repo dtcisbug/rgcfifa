@@ -1,4 +1,4 @@
-cfg:setTcpPort(8100);
+cfg:setTcpPort(8103);
 cfg:setServerType(0); -- Game - 0 | DB - 1 | Social - 2 | Login - 3 | Room - 4 | proxy - 5 |Client - 0xFF
 cfg:setServerUID(1); 
 cfg:setServerLogName("Game1"); 
