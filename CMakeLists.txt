@@ -7,7 +7,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(CXX_FLAGS
- -g
+ -g3
  -DCHECK_PTHREAD_RETURN_VALUE
  -D_FILE_OFFSET_BITS=64
  -Wall
@@ -38,7 +38,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 FIND_LIBRARY(SCRIPT_LIB libscript.a ./script)
 #FIND_LIBRARY(MONO_LIB libmonosgen-2.0.a ./thirdpart)
-FIND_LIBRARY(MONO_LIB libmonoboehm-2.0_p.a ./thirdpart)
+#FIND_LIBRARY(MONO_LIB libmonoboehm-2.0_p.a ./thirdpart)
+FIND_LIBRARY(MONO_LIB libmonoboehm-2.0.a ./thirdpart)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
@@ -49,5 +50,5 @@ add_subdirectory(Common)
 #add_subdirectory(script)
 add_subdirectory(Network)
 add_subdirectory(Server)
-add_subdirectory(Client)
+#add_subdirectory(Client)
 

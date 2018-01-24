@@ -66,8 +66,8 @@ int ClientConn::parsePacket( struct evbuffer * buf, int &off, int &len, int& tar
 	off = 10;
 	len = len2 + 10;
 
-    target = (static_cast<UInt16>(buf_[6]))<<8 + static_cast<UInt16>(buf_[7]);
-    source = (static_cast<UInt16>(buf_[8]))<<8 + static_cast<UInt16>(buf_[9]);
+    target = ((static_cast<UInt16>(buf_[6]))<<8) + static_cast<UInt16>(buf_[7]);
+    source = ((static_cast<UInt16>(buf_[8]))<<8) + static_cast<UInt16>(buf_[9]);
 
     //cmdid 4byte idx 2,3,4,5
     return ((static_cast<UInt32>(buf_[2]))<<24) + ((static_cast<UInt32>(buf_[3]))<<16) + (static_cast<UInt32>(buf_[4]) << 8) + static_cast<UInt32>(buf_[5]);
