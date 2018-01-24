@@ -4,6 +4,7 @@
 #include "Platform.h"
 #ifndef _WIN32
 #include <sys/time.h>
+#include "stdlib.h"
 #else
 #include <Windows.h>
 #include <time.h>

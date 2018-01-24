@@ -4,7 +4,7 @@
 #include "Common/Singleton.h"
 #include "Common/Queue.h"
 #include "MsgHandler/MsgTypes.h"
-#include "Server/ServerTypes.h"
+#include "ServerTypes.h"
 #include "Common/Mutex.h"
 #include "Common/MemBlockPool.h"
 

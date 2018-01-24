@@ -3,7 +3,7 @@
 
 #include "Common/Singleton.h"
 #include "Network/TcpServerWrapper.h"
-#include "WorkerThread.h"
+//#include "WorkerThread.h"
 
 namespace GObject{
     class Logic;

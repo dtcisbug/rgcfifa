@@ -1,6 +1,7 @@
-set(net_SRCS
+set(client_SRCS
     ./Cfg.cpp
     ./ConfigScript.cpp
+    
     ./GlobalObject.cpp
     ./Client.cpp
     ./Log.cpp
@@ -8,8 +9,11 @@ set(net_SRCS
 
   )
 
-add_library(rgc_client SHARED ${base_SRCS})
-target_link_libraries(rgc_client rgc_base rgc_net)
+set(CMAKE_CXX_FLAGS "-fPIC ${CMAKE_CXX_FLAGS}")
+
+add_library(rgc_client SHARED ${client_SRCS})
+#target_link_libraries(rgc_client rgc_net rgc_base)
+target_link_libraries(rgc_client)
 
 install(TARGETS rgc_client DESTINATION lib)
 

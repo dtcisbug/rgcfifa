@@ -12,7 +12,7 @@ namespace Network
 		WSAStartup(MAKEWORD(2, 2), &wsadata);
 		evthread_use_windows_threads();
 #else
-		evthread_use_pthreads();
+		//evthread_use_pthreads();
 #endif
 		//tinf_init();
 	}
