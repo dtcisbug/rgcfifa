@@ -305,7 +305,7 @@ namespace Network
 
 	inline bool TcpClientWrapper::GetConnStatus(int sessionID)
 	{
-		TcpConnection conn = m_TcpService->findConn(sessionID);
+		TcpConnection conn = m_TcpService->findConn(-sessionID);
 
 		if (conn.get() == NULL)
 		{

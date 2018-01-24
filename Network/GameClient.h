@@ -1,7 +1,7 @@
 ﻿#ifndef _GAMECLIENT_H_
 #define _GAMECLIENT_H_
 
-#include "Common/AtomicVal.h"
+//#include "Common/AtomicVal.h"
 #include "TcpConduit.h"
 
 namespace Network

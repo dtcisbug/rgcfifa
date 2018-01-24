@@ -163,7 +163,7 @@ namespace GObject
         printf("ProcessProxyLogic: %u,target type id is %u : %u,source type id is %u : %u,sessionID is %u ! \n", cmd_id,target_type,target_id,source_type,source_id,sessionID);
         if (cmd_id == 0x01)
         {
-            m_mLinkedServer[static_cast<UInt16>(source_type) << 8 + static_cast<UInt16>(source_id)] = sessionID;
+            m_mLinkedServer[(static_cast<UInt16>(source_type) << 8) + static_cast<UInt16>(source_id)] = sessionID;
             // connect reg msg
             Stream st(static_cast<UInt32>(0x2),
                     SPLIT_ID(source_type,source_id),
@@ -174,7 +174,7 @@ namespace GObject
             NETWORK()->SendMsgToClient(sessionID,&st[0],st.size());
         }
         else
-            ProxyMsg2Server(m_mLinkedServer[static_cast<UInt16>(target_type) << 8 + static_cast<UInt16>(target_id)],cmd_id,msgBody,len,SPLIT_ID(target_type,target_id),SPLIT_ID(source_type,source_id));
+            ProxyMsg2Server(m_mLinkedServer[(static_cast<UInt16>(target_type) << 8) + static_cast<UInt16>(target_id)],cmd_id,msgBody,len,SPLIT_ID(target_type,target_id),SPLIT_ID(source_type,source_id));
     }
 
     void Logic::SendMsg(int sessionID,int cmdid,MonoArray * buffer,int size)
