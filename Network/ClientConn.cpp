@@ -15,8 +15,8 @@
 namespace Network
 {
 
-ClientConn::ClientConn( int fd, Network::TcpSlaveServer * s, int id, int ss,ServerCommonConfig cfg) : 
-	TcpConduit(fd, s, id) , _ss(ss), _server_cfg(cfg) 
+ClientConn::ClientConn( int fd_, Network::TcpSlaveServer * s, int id_, int ss,ServerCommonConfig& cfg) : 
+	TcpConduit(fd_, s, id_), _ss(ss), _server_cfg(cfg) 
 {
 }
 
@@ -27,7 +27,8 @@ bool ClientConn::enabled()
 
 void ClientConn::initConnection()
 {
-	struct sockaddr_in addr = {0};
+	struct sockaddr_in addr;
+    memset(&addr,0,sizeof(addr));
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = htonl(ResolveAddress(_server_cfg.GetIpFromConnectMap(_ss).c_str()));
 	addr.sin_port = htons(_server_cfg.GetPortFromConnectMap(_ss));

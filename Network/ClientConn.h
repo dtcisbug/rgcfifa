@@ -11,7 +11,7 @@ class ClientConn:
 	public TcpConduit
 {
 public:
-	ClientConn(int fd, Network::TcpSlaveServer * s, int id, int ss, ServerCommonConfig cfg);
+	ClientConn(int fd, Network::TcpSlaveServer * s, int id, int ss, ServerCommonConfig& cfg);
 	static bool enabled();
     virtual void initConnection();
 

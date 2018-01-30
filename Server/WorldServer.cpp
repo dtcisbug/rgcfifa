@@ -128,20 +128,3 @@ GObject::Logic& WorldServer::GetLogic()
     return Worker<GObject::Logic>();
 }
 
-#define MAX_RET_LEN 1024
-
-static int recvret(char* data, size_t size, size_t nmemb, char* buf)
-{
-    size_t nsize = size * nmemb;
-    if (nsize > MAX_RET_LEN) {
-        //bcopy(data, buf, MAX_RET_LEN);
-		memcpy(buf, data, MAX_RET_LEN);
-        return MAX_RET_LEN;
-    }
-
-	memcpy(buf, data, nsize);
-    //bcopy(data, buf, nsize);
-    return static_cast<int>(nsize);
-}
-
-

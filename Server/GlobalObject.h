@@ -34,7 +34,7 @@ public:
 
 	inline bool GetMsgQueue(UInt8 workerId, MsgQueue& popMsgQueue)
 	{
-		assert( workerId >= 0 && workerId < MAX_THREAD_NUM );
+		assert( workerId < MAX_THREAD_NUM );
 		{
 			FastMutex::ScopedLock lock(m_MsgQueueCs[workerId]);
 			if(m_MsgQueue[workerId].Empty())

@@ -14,7 +14,7 @@
 
 namespace Network
 {
-	TcpConduit::TcpConduit(int fd, TcpSlaveServer * h, int uid): _socket(fd), _host(h), _bev(NULL), _pendclose(false), _uid(uid)
+	TcpConduit::TcpConduit(int fd_, TcpSlaveServer * h, int uid): _socket(fd_), _host(h), _bev(NULL), _pendclose(false), _uid(uid)
 	{
 		_bev = bufferevent_socket_new(_host->getEvBase(), _socket, BEV_OPT_THREADSAFE | BEV_OPT_DEFER_CALLBACKS);
 		if(!_bev)

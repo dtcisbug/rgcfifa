@@ -39,7 +39,7 @@ public:
     Stream(UInt32 cmd,UInt16 target = 0,UInt16 source = 0): _pos(0)
 	{
 		//UInt8 buf[8] = {0, 0, cmd >> 8, cmd & 0xFF, target >> 8,target & 0xFF, source >> 8, source & 0xFF};
-		UInt8 buf[10] = {0, 0, cmd >> 24, ((cmd >> 16) & 0xFF) ,((cmd >> 8) & 0xFF),(cmd & 0xFF), target >> 8,target & 0xFF, source >> 8, source & 0xFF};
+		UInt8 buf[10] = {0, 0, static_cast<UInt8>(cmd >> 24), static_cast<UInt8>((cmd >> 16) & 0xFF) ,static_cast<UInt8>((cmd >> 8) & 0xFF),static_cast<UInt8>(cmd & 0xFF), static_cast<UInt8>(target >> 8),static_cast<UInt8>(target & 0xFF), static_cast<UInt8>(source >> 8), static_cast<UInt8>(source & 0xFF)};
 		_buf.assign(buf, buf + 10);
 	}
 	inline operator std::vector<UInt8>&() {return _buf;}

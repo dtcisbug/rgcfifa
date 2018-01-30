@@ -10,8 +10,8 @@
 namespace Network
 {
 
-GameClient::GameClient( int fd, Network::TcpSlaveServer * s, int id ):
-	TcpConduit(fd, s, id), _chk(0xff), m_Chk(0xff), m_OldChk(0xff)
+GameClient::GameClient( int fd_, Network::TcpSlaveServer * s, int id_ ):
+	TcpConduit(fd_, s, id_), _chk(0xff), m_Chk(0xff), m_OldChk(0xff)
 {
 	struct sockaddr_in peerAddr;
 	getAddr(&peerAddr);

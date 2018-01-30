@@ -19,7 +19,6 @@ bool MsgPopHandler::ProcessMsg()
 	do
 	{
 		hdr = msgQueue.Pop();
-        size_t packet_len = (hdr->bodyLen > 0) ? sizeof(UInt16) : 0;
         switch(hdr->msgType)
         {
             case CLIENT_MSGTYPE:
@@ -44,11 +43,9 @@ bool MsgPopHandler::ProcessMsg()
             default:
                 break;
         }
-		char* msgBody = (char*)((MsgHdr*)hdr + 1);
 		
         GLOBAL().FreeMsgBlock((char *)hdr);
 	}
 	while (!msgQueue.Empty());
-    //printf("Process Msg is Done!!! Now is %d !!!\n",TimeUtil::Now());
 	return true;
 }

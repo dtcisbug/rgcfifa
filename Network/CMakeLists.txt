@@ -14,7 +14,8 @@ set(net_SRCS
   )
 
 add_library(rgc_net ${net_SRCS})
-target_link_libraries(rgc_net rgc_base event event_pthreads)
+#target_link_libraries(rgc_net rgc_base event event_pthreads)
+target_link_libraries(rgc_net rgc_base event )
 
 install(TARGETS rgc_net DESTINATION lib)
 

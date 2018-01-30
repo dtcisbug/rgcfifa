@@ -25,15 +25,16 @@ struct ServerCommonConfig
     }
 
     //ServerCommonConfig(const ServerCommonConfig& config)
-    ServerCommonConfig &operator = (const ServerCommonConfig &config)
+    ServerCommonConfig& operator = (const ServerCommonConfig &config)
     {
         m_ServerType = config.m_ServerType; 
         m_ServerUID = config.m_ServerUID; 
         m_ServerListenPort = config.m_ServerListenPort; 
         for (auto& iter : config.m_ServerConnectMap)    
         {
-            this->AddConnectList(iter.first >> 8,iter.first & 0xFF,std::get<0>(iter.second),std::get<1>(iter.second));
+            this->AddConnectList(static_cast<UInt8>(iter.first >> 8),iter.first & 0xFF,std::get<0>(iter.second),std::get<1>(iter.second));
         }
+        return *this;
     }
 
     std::string GetIpFromConnectMap(UInt16 uid) {

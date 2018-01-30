@@ -92,7 +92,6 @@ namespace Network
 		std::set<size_t> _emptySet;
 
         std::map<int/*id*/,int/*flag*/> _connUp;
-        ServerCommonConfig _server_cfg;
 
 	private:
 		Mutex _mutex;
@@ -108,6 +107,9 @@ namespace Network
 			int data;
 		};
 		std::vector<_OpStruct> _opList;
+    protected:
+        ServerCommonConfig _server_cfg;
+
 	};
 
 	class TcpMasterServer:

@@ -15,16 +15,16 @@ public:
     typedef container::size_type size_type;
 public:
 
-    Unzipper(const char* data, size_type size)
+    Unzipper(const char* data, size_type size_)
     {
         Zip zip;
-        m_size = zip.unzip(m_data, reinterpret_cast<Zip::const_pointer>(data), size);
+        m_size = zip.unzip(m_data, reinterpret_cast<Zip::const_pointer>(data), size_);
     }
 
-    Unzipper(const UInt8* data, size_type size)
+    Unzipper(const UInt8* data, size_type size_)
     {
         Zip zip;
-        m_size = zip.unzip(m_data, data, size);
+        m_size = zip.unzip(m_data, data, size_);
     }
 
     inline const UInt8* operator & () const { return &m_data[0]; }

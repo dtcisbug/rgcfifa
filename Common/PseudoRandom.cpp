@@ -38,8 +38,6 @@ int rand_between(int s, int e)
 {
     if (!random_inited)
     {
-        int value = 0;
-        
         if (random_fd < 0)
         {
             std::random_device rdivce;

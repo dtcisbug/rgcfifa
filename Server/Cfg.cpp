@@ -11,8 +11,8 @@
 #endif
 
 Cfg::Cfg( ): tcpPort(8889),serverIp(0), serverLogName("Test"), dbPort(3306), 
-    debug(false),arenaPort(0),_filename("conf/config_game.lua"),
-    channelNum(0), serverNum(0)
+    debug(false),arenaPort(0),
+    channelNum(0), serverNum(0),_filename("conf/config_game.lua")  
 {
 }
 

@@ -20,28 +20,38 @@
 
 namespace GObject
 {
+
     class Logic 
         :public WorkerRunner<MsgPopHandler>
     {
         public:
-            inline UInt8 TID() const { return WORKER_THREAD_LOGIC; }
             bool Init();
+            
             void UnInit();
+            
             std::string GetLogName();
+            inline UInt8 TID() const { return WORKER_THREAD_LOGIC; }
+            
             void ProcessLogic(UInt32 cmd_id,char* msgBody,UInt32 len,int sessionID);
             void ProcessRegisteredProtocol(int sessionID);
             void ProcessProxyLogic(UInt32 cmd_id,char* msgBody,UInt32 len,UInt8 target_type,UInt8 target_id,UInt8 source_type,UInt8 source_id,int sessionID);
-            //export static method
+            
+            //export internal static method
         public:
             static MonoString* TestFunc();
             static void TestFunc1(int sessionID);
             static void SendMsg(int sessionID,int cmdid,MonoArray * buffer,int size);
             static void SendMsg2Server(int sessionID,int cmdid,MonoArray* buffer,int size,int target);
-            static void ProxyMsg2Server(int sessionID,int cmdid,const void * buffer,int size,int target,int source);
             static void GetDBStrcut(MonoString** ip,MonoString** user,MonoString** passwd,MonoString** db,int* port);
+            //------------------------------//
+            
+            //internal invoke static method
         private:
+            static void ProxyMsg2Server(int sessionID,int cmdid,const void * buffer,int size,int target,int source);
             static void Logic_Test(Logic* logic);
             static void Tick(Logic* logic);
+            MonoMethod* GetInvokeMethod(UInt8 name);
+            //------------------------------//
 
         private:
             std::map<UInt32,UInt32> m_mLinkedServer;

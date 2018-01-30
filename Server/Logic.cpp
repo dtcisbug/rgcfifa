@@ -8,20 +8,27 @@
 
 namespace GObject
 {
-    UInt8 time = 0;
-    
     //const char* managed_binary_path = "./CommonNetWork.dll";
     std::string managed_binary_path;
     MonoDomain* domain;
     MonoAssembly* assembly;
     MonoImage* image;
 	MonoClass * main_class;
+    std::map<UInt8,MonoMethod*> m_mInvokeMethods;
+
+    enum MONOMETHOD
+    {
+        MM_PRINTMONO = 0x01,
+        MM_TICK = 0x02,
+        MM_PROCESSMSG = 0x03,
+        MM_SETPROXY = 0x04,
+        MM_SETSERVICECONFIG = 0x05,
+    };
 
     bool Logic::Init()
     {
         managed_binary_path = "./" + cfg.serverDllName;
         domain = mono_jit_init(cfg.serverDllName.c_str());
-        //mono_domain_set_config(domain, "/usr/local/etc/mono/4.0/", "machine.config");
         mono_domain_set_config(domain, "./", "machine.config");
         //加载程序集ManagedLibrary.dll
         assembly = mono_domain_assembly_open(domain, managed_binary_path.c_str());
@@ -31,9 +38,12 @@ namespace GObject
         mono_add_internal_call("CommonNetWork.CCommonNetwork::SendMsg", reinterpret_cast<void*>(SendMsg));
         mono_add_internal_call("CommonNetWork.CCommonNetwork::SendMsg2Server", reinterpret_cast<void*>(SendMsg2Server));
         mono_add_internal_call("CommonNetWork.CCommonNetwork::GetDBStrcut", reinterpret_cast<void*>(GetDBStrcut));
+		
+        //获取MonoClass,类似于反射
+        main_class = mono_class_from_name(image, "CommonNetWork", "CCommonNetwork");
 
         //AddTimer(86400 * 1000, Logic_Test,this,10*1000);
-        AddTimer(5 * 100, Tick,this,10*1000);
+        AddTimer(5 * 100, Logic::Tick,this,10*1000);
         return true; 
     }
 
@@ -41,6 +51,7 @@ namespace GObject
     void Logic::UnInit() 
     {
         mono_jit_cleanup(domain);
+        m_mInvokeMethods.clear();
     }
 
     std::string Logic::GetLogName()
@@ -52,6 +63,45 @@ namespace GObject
     {
         return mono_string_new (mono_domain_get (), "Hello, world");
     }
+
+    MonoMethod* Logic::GetInvokeMethod(UInt8 name)
+    {
+        if (m_mInvokeMethods.find(name) != m_mInvokeMethods.end() && m_mInvokeMethods[name] != NULL)
+            return m_mInvokeMethods[name];
+        MonoMethodDesc* entry_point_method_desc = NULL;
+        MonoMethod* entry_point_method = NULL;
+        switch(name)
+        {
+            case MM_PRINTMONO:
+                entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:PrintMono()", true);
+                break;
+            case MM_TICK:
+                entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:Tick(int)", false);
+                break;
+            case MM_PROCESSMSG:
+                entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:ProcessMsg", true);
+                break;
+            case MM_SETPROXY:
+                entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:SetProxy(int)", false);
+                break;
+            case MM_SETSERVICECONFIG:
+                entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:SetServiceConfig(int,int,int)", false);
+                break;
+            default:
+                break;
+        }
+
+        if (entry_point_method_desc != NULL)
+        {
+            entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
+            m_mInvokeMethods[name] = entry_point_method;
+            if (entry_point_method_desc != NULL)
+                mono_method_desc_free(entry_point_method_desc);
+        }
+
+        return entry_point_method;
+    }
+
     
     void Logic::TestFunc1(int sessionID)
     {
@@ -61,35 +111,18 @@ namespace GObject
 
     void Logic::Logic_Test(Logic* logic)
     {
-        // =====================================================准备调用
-        //获取MonoClass,类似于反射
-		main_class = mono_class_from_name(image, "CommonNetWork", "CCommonNetwork");
-
-        //获取要调用的MonoMethodDesc,主要调用过程
-        MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:PrintMono()", true);
-        MonoMethod* entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
-        mono_method_desc_free(entry_point_method_desc);
-        //mono_domain_set_config (mono_domain_get(),"./","./");
+        MonoMethod* entry_point_method = logic->GetInvokeMethod(MM_PRINTMONO);
         //调用方法
         mono_runtime_invoke(entry_point_method, NULL, NULL, NULL);
-        
         return;
     }
 
     void Logic::Tick(Logic* logic)
     {
-        // =====================================================准备调用
-        //获取MonoClass,类似于反射
-		main_class = mono_class_from_name(image, "CommonNetWork", "CCommonNetwork");
-
-        //获取要调用的MonoMethodDesc,主要调用过程
-        MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:Tick(int)", false);
-        MonoMethod* entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
-        mono_method_desc_free(entry_point_method_desc);
+        MonoMethod* entry_point_method = logic->GetInvokeMethod(MM_TICK);
 		void* args[1];
 		UInt64 now_tick = TimeUtil::GetTick();
 		args[0] = &now_tick;
-        //mono_domain_set_config (mono_domain_get(),"./","./");
         //调用方法
         mono_runtime_invoke(entry_point_method, NULL, args, NULL);
         
@@ -103,13 +136,8 @@ namespace GObject
             ProcessRegisteredProtocol(sessionID);
             return;
         }
-        //获取MonoClass,类似于反射
-		main_class = mono_class_from_name(image, "CommonNetWork", "CCommonNetwork");
 
-        //获取要调用的MonoMethodDesc,主要调用过程
-        MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:ProcessMsg", true);
-        MonoMethod* entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
-        mono_method_desc_free(entry_point_method_desc);
+        MonoMethod* entry_point_method = GetInvokeMethod(MM_PROCESSMSG);
         if (entry_point_method == NULL)
         {
             printf("method is null!!!\n");
@@ -121,12 +149,10 @@ namespace GObject
         memcpy(length,msgBody,2);
         char* body = new char[len-2];
         memcpy(body,msgBody+2,len-2);
-        //MonoString* str = mono_string_new (mono_domain_get (), (char*)body);
         MonoArray* array = mono_array_new(mono_domain_get (),mono_get_byte_class (),len-2);
         memcpy (mono_array_addr (array, char, 0), body, len-2);
         UInt32 packet_len = *((UInt16*)length);
         void* args[] = { &sessionID,&cmd_id,array,&packet_len};
-        //mono_domain_set_config (mono_domain_get(),"./","./");
         //调用方法
         mono_runtime_invoke(entry_point_method, NULL, args, NULL);
 		delete body;
@@ -134,17 +160,12 @@ namespace GObject
 
     void Logic::ProcessRegisteredProtocol(int sessionID)
     {
-        main_class = mono_class_from_name(image, "CommonNetWork", "CCommonNetwork");
-        MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("CommonNetWork.CCommonNetwork:SetProxy(int)", false);
-        MonoMethod* entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
-        mono_method_desc_free(entry_point_method_desc);
+        MonoMethod* entry_point_method = GetInvokeMethod(MM_SETPROXY);
         void* args[1];
         args[0] = &sessionID;
         mono_runtime_invoke(entry_point_method, NULL, args, NULL);     
 
-        MonoMethodDesc* entry_point_method_desc1 = mono_method_desc_new("CommonNetWork.CCommonNetwork:SetServiceConfig(int,int,int)", false);
-        MonoMethod* entry_point_method1 = mono_method_desc_search_in_class(entry_point_method_desc1, main_class);
-        mono_method_desc_free(entry_point_method_desc1);
+        MonoMethod* entry_point_method1 = GetInvokeMethod(MM_SETSERVICECONFIG);
         void* args1[1];
         int service_id = (static_cast<UInt16>(cfg.serverType) << 8) + static_cast<UInt16>(cfg.serverUID); // source
         int max_db_service = 1;

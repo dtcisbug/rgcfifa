@@ -120,10 +120,10 @@ AtomicCounter& AtomicCounter::operator = (const AtomicCounter& counter)
 }
 
 
-AtomicCounter& AtomicCounter::operator = (AtomicCounter::ValueType value)
+AtomicCounter& AtomicCounter::operator = (AtomicCounter::ValueType value_)
 {
 	FastMutex::ScopedLock lock(_counter.mutex);
-	_counter.value = value;
+	_counter.value = value_;
 	return *this;
 }
 

@@ -328,7 +328,8 @@ void TcpMasterServer::listen(UInt32 addr, UInt16 port, UInt32 backlog)
 	_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if(_socket < 0)
 		throw std::bad_exception();
-	struct sockaddr_in addr2 = {0};
+	struct sockaddr_in addr2 ;
+    memset(&addr2,0,sizeof(addr2));
 	addr2.sin_family = AF_INET;
 	addr2.sin_addr.s_addr = htonl(addr);
 	addr2.sin_port = htons(port);
@@ -381,7 +382,8 @@ void TcpMasterServer::on_server_read()
 {
 	while(1)
 	{
-		struct sockaddr_in addr = {0};
+		struct sockaddr_in addr ;
+        memset(&addr,0,sizeof(addr));
 		socklen_t l = sizeof(addr);
 		int sock = accept(_socket, (struct sockaddr *)&addr, &l);
 		if(sock < 0)
