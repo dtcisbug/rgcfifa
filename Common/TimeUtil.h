@@ -11,8 +11,6 @@
 #define localtime_r(t, tm) localtime_s(tm, t)
 #endif
 
-#define bj_timezone 8 // beijing east 8 zone
-
 class TimeUtil
 {
     public:
@@ -151,12 +149,11 @@ public:
     }
 	static inline UInt32 SharpDay(int c = 0, UInt32 cur = Now())
 	{
-		UInt32 tmptm = (cur + bj_timezone) / 86400 * 86400 + bj_timezone;
-        if(tmptm > cur)
-			tmptm -= 86400;
-		else if(tmptm + 86400 <= cur)
-			tmptm += 86400;
-		return tmptm + c * 86400;
+        time_t t = cur;
+        struct tm t_tm;
+        localtime_r(&t,&t_tm);
+        t_tm.tm_hour = t_tm.tm_min = t_tm.tm_sec = 0;
+        return mktime(&t_tm) + c * 24* 60 * 60;
 	}
 	static inline UInt32 SharpHour(int c, UInt32 tm = Now())
 	{

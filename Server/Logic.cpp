@@ -202,7 +202,7 @@ namespace GObject
     {
         Stream st(static_cast<UInt32>(cmdid),
             (static_cast<UInt16>(1) << 8) + static_cast<UInt16>(1), // target 
-            (static_cast<UInt16>(cfg.serverType) << 8) + static_cast<UInt16>(cfg.serverUID) // source
+            static_cast<UInt16>(cfg.serverType) << 8 + static_cast<UInt16>(cfg.serverUID) // source
             );
         st << static_cast<UInt16>(size);
         st.append((uint8_t*)mono_array_addr(buffer, char, 0), size);
@@ -215,8 +215,8 @@ namespace GObject
     void Logic::SendMsg2Server(int sessionID,int cmdid,MonoArray* buffer,int size,int target)
     {
         Stream st(static_cast<UInt32>(cmdid),
-            static_cast<UInt16>(target), // target 
-            (static_cast<UInt16>(cfg.serverType) << 8) + static_cast<UInt16>(cfg.serverUID) // source
+                 static_cast<UInt16>(target), // target 
+                 static_cast<UInt16>(cfg.serverType) << 8 + static_cast<UInt16>(cfg.serverUID) // source
             );
         st << static_cast<UInt16>(size);
         st.append((uint8_t*)mono_array_addr(buffer, char, 0), size);

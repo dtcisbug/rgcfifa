@@ -66,10 +66,7 @@ bool WorldServer::Init(const char * scriptStr, const char * serverName, int num)
     else
         cfg.serverNum = num;
 
-    //cfg.serverLogId = cfg.serverNum;
-
     m_LogicWorker = new WorkerThread<GObject::Logic>(new GObject::Logic());
-    //m_LogicWorker->Run();
 	
     return true;
 }
@@ -99,11 +96,9 @@ void WorldServer::Run()
         server_cfg.AddConnectList(std::get<0>(iter),std::get<1>(iter),std::get<2>(iter),std::get<3>(iter));
     }
 
-	//m_TcpService = new Network::TcpServerWrapper(cfg.tcpPort);
 	m_TcpService = new Network::TcpServerWrapper(server_cfg);
 	m_TcpService->Start();
 
-    //m_LogicWorker->tryJoin(300000);
     m_LogicWorker->join();
 	m_TcpService->Join();
 

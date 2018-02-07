@@ -3,7 +3,6 @@
 
 #include "Common/Singleton.h"
 #include "Network/TcpServerWrapper.h"
-#include "ServerTypes.h"
 #include "WorkerThread.h"
 
 extern const char* s_HelpInfo;
@@ -44,7 +43,6 @@ protected:
 
 private:
 	bool	m_IsActive;
-	ServerInfor m_ServerInfor;
 
 	//////////////////////////////////////////////////////////////////////////
 public:

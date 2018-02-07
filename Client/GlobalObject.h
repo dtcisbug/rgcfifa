@@ -8,6 +8,11 @@
 #include "Common/Mutex.h"
 #include "Common/MemBlockPool.h"
 
+enum
+{
+	WORKER_THREAD_LOGIC = 0,	
+	MAX_THREAD_NUM
+};
 
 class GlobalObject : public Singleton<GlobalObject>
 {
